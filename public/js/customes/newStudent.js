@@ -363,6 +363,9 @@ $("#getBackToAddStudent").click(function() {
 
 /*********************************************************************************************/
 
+  function uniqueId () {
+  return  (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase();
+};
 /*********************************************************************************************/
 
 function saveNewStudentFinally() {
@@ -384,7 +387,9 @@ function saveNewStudentFinally() {
 	let GinputPhoneNumber = $("#GinputPhoneNumber").val().trim();
 
 	loadingScreen(true, "Saving , Please wait....");
+	let reg_num = uniqueId();
 	$.post("http://localhost:3500/savingNewstudentData", {
+		reg_num: reg_num,
 		inputClassLevel: inputClassLevel,
 		inputClass: inputClass,
 		inputFirstname: inputFirstname,
