@@ -108,6 +108,25 @@ module.exports.getAllStudents = function () {
 	});
 };
 /*-------------------------------------------------------------------------------------------------------*/
+module.exports.findOneStudent = function(name, surname) {
+	return new Promise(function(resolve, reject) {
+		db.find({
+			inputFirstname: name,
+			inputSurname: surname
+		}, function(err, docs) {
+			if (!err) {
+
+				resolve(docs.length == 0 ? "empty" : "exists");
+
+			} else {
+
+				reject(err);
+				console.log("Error on findOneStudent()");
+			}
+		});
+	});
+};
+/*-------------------------------------------------------------------------------------------------------*/
 module.exports.updateStudent = function (reg_num , 
 	inputClassLevel,
 	inputClass,
