@@ -71,21 +71,21 @@ module.exports.searchStudents = function (query) {
 	return new Promise(function (resolve , reject) {
 		
 		db.find({
-			$or:[
-				{
-					inputFirstname:{
-						$regex: new RegExp('.*' + query.toLowerCase() + '.*', 'i')
-					}
-				},{
-					inputSurname:{
-						$regex: new RegExp('.*' + query.toLowerCase() + '.*', 'i')
-					}
-				},{
-					reg_num:{
-						$regex:new RegExp('.*' + query.toLowerCase() + '.*', 'i')
-					}
-				}
-			]
+				$or:[
+						{
+							inputFirstname:{
+								$regex: new RegExp('.*' + query.toLowerCase() + '.*', 'i')
+							}
+						},{
+							inputSurname:{
+								$regex: new RegExp('.*' + query.toLowerCase() + '.*', 'i')
+							}
+						},{
+							reg_num:{
+								$regex:new RegExp('.*' + query.toLowerCase() + '.*', 'i')
+							}
+						}
+				]
 		},function (err , docs) {
 			if(!err){
 				resolve(docs);
@@ -201,7 +201,7 @@ module.exports.saveNewStudent = function(
 ) {
 	return new Promise(function (resolve , reject) {
 		let studentObject = {
-			'reg_num':reg_num
+			'reg_num':reg_num,
 			'inputClassLevel': inputClassLevel,
 			'inputClass': inputClass,
 			'inputFirstname': inputFirstname,

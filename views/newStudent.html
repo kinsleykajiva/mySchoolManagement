@@ -1,9 +1,70 @@
 <template class="task-template" >
 	<section class="component-section" id="section_addStudent">
 
+</div>
+    </div>
+    <div id="gardianDetailsSection" style="display: none;">
+         <div class="form-row">
+                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                          <input type="text" class="form-text" id="GinputFirstname"  required>
+                          <span class="bar"></span>
+                          <label>Firstname </label>
+                      </div>
+                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                          <input type="text" class="form-text" id="GinputSurname"  required>
+                          <span class="bar"></span>
+                          <label>Surname </label>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                          <input type="text" class="form-text" id="GinputID"  required>
+                          <span class="bar"></span>
+                          <label>National Id Number </label>
+                      </div>
+                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                          <input type="text" class="form-text" id="GinputAddress"  required>
+                          <span class="bar"></span>
+                          <label>Physical Address </label>
+                      </div>
+                  </div>
+                  <div class="form-row">
+            <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+              <input type="email" class="form-text" id="GinputEmail"  required>
+              <span class="bar"></span>
+              <label>Email Address</label>
+          </div>
+          <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+              <input type="tel" class="form-text" id="GinputPhoneNumber"  required>
+              <span class="bar"></span>
+              <label>Phone Number</label>
+          </div>
+      </div>
+    </div>
+    <!-- panoo -->
 
+
+
+
+    <div class="col-md-12" style="margin-top: 20px;">
+     <!--  <div class="form-group form-animate-checkbox">
+         <input type="checkbox" class="checkbox"  id="validate_agree" name="validate_agree">
+         <label>Please agree to our policy</label>
+     </div> -->
+      <input id="btnNextStudentData"  class="submit btn  btn-round btn-info" type="button" value="Next">
+       <input id="btnPrevStudentData" style="display: none;"  class="submit btn  btn-round btn-default" type="button" value="Previous">
+      <input id="btnSaveStudentData" style="display: none;" type="button" class=" btn btn-round btn-primary" value="Save Details"/>
+  </div>
+</form>
+
+</div>
+</div>
+</div>
+</div>
 
 
 	</section>
-	<script type="text/javascript" src="../public/js/customes/newStudent.js"></script>
+	<!-- cut for addstudent -->
+<script src="../public/js/frameworks/jquery.mask.min.js"></script>
+<script type="text/javascript" src="../public/js/customes/newStudent.js"></script>
 </template>

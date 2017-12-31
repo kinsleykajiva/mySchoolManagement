@@ -34,14 +34,15 @@ function onCreateWindow () {
 				})
 
 		);
-		/*elemon({
+		elemon({
 			app: app,
-			mainFile: 'Main.js',
-			bws: [
+			mainFile: 'MainIndex.js',
+			/*bws: [
 					{bw: win, res: ['../views/index.html', '../public/js/customeQuery.js', '../public/css/style.css']}
-			]
-		});*/
-		//let server = require('./requestExpress.js');
+			]*/
+		});
+
+		let server = require('./requestsExpress.js');
 }
 
 /****************************************************************************************************/

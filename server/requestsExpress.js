@@ -7,16 +7,17 @@
 let express = require('express');
 let app = express();
 var bodyParser = require("body-parser");
-
+let studentDB = require('./DBAccess/Local/Nedb/DBstudentAccess');
 
 /*------------------------------------------------------------------------------------------------*/
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /*------------------------------------------------------------------------------------------------*/
-app.get('/getAllStudentData' , function (req , res) {
-	
+app.post('/getAllStudentData' , function (req , res) {
+	console.log(req.body.foo);
 	studentDB.getAllStudents().then(function  (response) {
+
 		res.json(response);
 	}).catch(function () {
 		console.log("An error during getAllStudents() ");
@@ -77,7 +78,7 @@ app.post("/savingNewstudentData" , function (req , res) {
 			req.body.GinputEmail ,
 			req.body.GinputPhoneNumber
 
-				)then(function (response) {
+				).then(function (response) {
 					res.json(response);
 				}).catch(function () {
 					console.log('Error in saving');
@@ -112,7 +113,7 @@ app.post("/saveStudentDataEdit" , function (req , res) {
 		req.body.GinputEmail,
 		req.body.GinputPhoneNumber
 
-	) then(function(response) {
+	) .then(function(response) {
 		res.json(response);
 	}).catch(function() {
 		console.log('Error in saving');
