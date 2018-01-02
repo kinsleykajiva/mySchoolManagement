@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /*------------------------------------------------------------------------------------------------*/
-app.post('/getAllStudentData' , function (req , res) {
-	console.log(req.body.foo);
+app.get('/getAllStudentData' , function (req , res) {
+	
 	studentDB.getAllStudents().then(function  (response) {
 
 		res.json(response);

@@ -4,7 +4,7 @@
   "description": "school management system",
   "main": "server/MainIndex.js",
   "scripts": {
-     "start": "electron .",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,8 +15,10 @@
   "license": "ISC",
   "dependencies": {
     "about-window": "^1.8.0",
+    "async": "^2.6.0",
     "body-parser": "^1.18.2",
     "electron": "^1.7.10",
+    "electron-json-storage": "^4.0.2",
     "electron-process-manager": "^0.1.0",
     "electron-reload": "^1.2.2",
     "got": "^8.0.1",

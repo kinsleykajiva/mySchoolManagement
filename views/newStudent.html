@@ -1,67 +1,177 @@
 <template class="task-template" >
 	<section class="component-section" id="section_addStudent">
-
-</div>
-    </div>
-    <div id="gardianDetailsSection" style="display: none;">
-         <div class="form-row">
-                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
-                          <input type="text" class="form-text" id="GinputFirstname"  required>
-                          <span class="bar"></span>
-                          <label>Firstname </label>
-                      </div>
-                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
-                          <input type="text" class="form-text" id="GinputSurname"  required>
-                          <span class="bar"></span>
-                          <label>Surname </label>
-                      </div>
+ <div class="panel box-shadow-none content-header">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <h3 class="animated fadeInLeft">Add a new student to the system</h3>
+                    <p class="animated fadeInDown">
+                      Student <span class="fa-angle-right fa"></span> New student
+                    </p>
                   </div>
-                  <div class="form-row">
-                      <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
-                          <input type="text" class="form-text" id="GinputID"  required>
-                          <span class="bar"></span>
-                          <label>National Id Number </label>
+                </div>
+              </div>
+              <!-- start of form -->
+
+              <div class="col-md-10">
+               <!-- done Process start -->
+               
+
+               <div id="newStuden_NotificationPanel" class="panel" style="display: none;" >
+                <div class="panel-heading">
+                  <h4>System Database Notification</h4>
+                </div>
+                <div class="panel-body">
+                  <center>
+                    <h3  style="color: #27c24c">
+                     <strong>
+                      <span class="fa fa-check"></span>  Saved Successfully
+                    </strong>
+                  </h3><br>
+                  <button id="getBackToAddStudent" class=" btn btn-round btn-primary">
+                    Go Back
+                  </button>
+                  
+                  
+                  
+                  
+                </center>
+              </div>
+            </div>
+            
+            <!-- End of Done Process -->
+            <div class="col-md-12 panel" id="formPanel" >
+              <div class="col-md-12 panel-heading">
+                <h4 id="formHeadingDetails">Student Details</h4>
+              </div>
+              <div class="col-md-12 panel-body" style="padding-bottom:30px;">
+                <div class="col-md-12">
+                  <form class="cmxform" id="addNewStudentForm" onsubmit="return false;">
+                    <div id="studentDetailsSection"  >
+                     <div class="form-row">
+                      <div class="form-group col-md-6 form-animate-text" id="divinputClassLevel" style="margin-top:40px !important;">
+
+                        <input type="number"  max="7" min="1"  onkeypress="return isInRange(this)" maxlength="1" class="form-text" id="inputClassLevel" step="1"  required>
+                        <span class="bar"></span>
+                        <label>Class/Grade Level</label>
                       </div>
                       <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
-                          <input type="text" class="form-text" id="GinputAddress"  required>
-                          <span class="bar"></span>
-                          <label>Physical Address </label>
+
+                        <input type="text" class="form-text" id="inputClass"  required>
+                        <span class="bar"></span>
+                        <label> <span class="fa fa-calendar"></span> Class</label>
                       </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6 form-animate-text" id="divinputFirstname" style="margin-top:40px !important;">
+                        <input type="text" class="form-text" id="inputFirstname"  required>
+                        <span class="bar"></span>
+                        <label>Firstname </label>
+                      </div>
+                      <div class="form-group col-md-6 form-animate-text validate" id="divinputSurname" style="margin-top:40px !important;">
+                        <input type="text" class="form-text" id="inputSurname"  required>
+                        <span class="bar"></span>
+                        <label>Surname </label>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-6 form-animate-text " id="divinputGender" style="margin-top:40px !important;">
+                        <select type="email" class="form-text"  id="inputGender" required>
+                         <option value="null" selected>Choose...</option>
+                         <option value="Male" >Male</option>
+                         <option value="Female" >Female</option>
+                       </select>
+                       <span class="bar"></span>
+                       <label>Gender</label>
+                     </div>
+                     <div class="form-group col-md-6 form-animate-text" id="divinputDobr"  style="margin-top:40px !important;">
+                      <input type="tel" class="form-text mask-date" id="inputDob" required>
+                      <span class="bar"></span>
+                      <label for="inputDob">Date Of Birth(dd/MM/YYYY) </label>
+                    </div>
                   </div>
+
+                  
+
                   <div class="form-row">
-            <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
-              <input type="email" class="form-text" id="GinputEmail"  required>
-              <span class="bar"></span>
-              <label>Email Address</label>
-          </div>
-          <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
-              <input type="tel" class="form-text" id="GinputPhoneNumber"  required>
-              <span class="bar"></span>
-              <label>Phone Number</label>
-          </div>
-      </div>
-    </div>
-    <!-- panoo -->
+                    <div class="form-group col-md-6 form-animate-text" id="divinputEmail" style="margin-top:40px !important;">
+                      <input type="text" class="form-text" id="inputEmail"  required>
+                      <span class="bar"></span>
+                      <label>Email Address</label>
+                    </div>
+                    <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                      <input type="tel" class="form-text" id="inputPhoneNumber"  required>
+                      <span class="bar"></span>
+                      <label>Phone Number</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+
+                      <input type="text" class="form-text" required id="inputAddress"  >
+                      <span class="bar"></span>
+                      <label>Physical Address</label>
+                    </div>
+                  </div>
+                </div>
+                <div id="gardianDetailsSection" style="display: none;">
+                 <div class="form-row">
+                  <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" class="form-text" id="GinputFirstname"  required>
+                    <span class="bar"></span>
+                    <label>Firstname </label>
+                  </div>
+                  <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" class="form-text" id="GinputSurname"  required>
+                    <span class="bar"></span>
+                    <label>Surname </label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" class="form-text" id="GinputID"  required>
+                    <span class="bar"></span>
+                    <label>National Id Number </label>
+                  </div>
+                  <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                    <input type="text" class="form-text" id="GinputAddress"  required>
+                    <span class="bar"></span>
+                    <label>Physical Address </label>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                    <input type="email" class="form-text" id="GinputEmail"  required>
+                    <span class="bar"></span>
+                    <label>Email Address</label>
+                  </div>
+                  <div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+                    <input type="tel" class="form-text" id="GinputPhoneNumber"  required>
+                    <span class="bar"></span>
+                    <label>Phone Number</label>
+                  </div>
+                </div>
+              </div>
+              <!-- panoo -->
 
 
 
 
-    <div class="col-md-12" style="margin-top: 20px;">
+              <div class="col-md-12" style="margin-top: 20px;">
      <!--  <div class="form-group form-animate-checkbox">
          <input type="checkbox" class="checkbox"  id="validate_agree" name="validate_agree">
          <label>Please agree to our policy</label>
-     </div> -->
-      <input id="btnNextStudentData"  class="submit btn  btn-round btn-info" type="button" value="Next">
+       </div> -->
+       <input id="btnNextStudentData"  class="submit btn  btn-round btn-info" type="button" value="Next">
        <input id="btnPrevStudentData" style="display: none;"  class="submit btn  btn-round btn-default" type="button" value="Previous">
-      <input id="btnSaveStudentData" style="display: none;" type="button" class=" btn btn-round btn-primary" value="Save Details"/>
-  </div>
-</form>
+       <input id="btnSaveStudentData" style="display: none;" type="button" class=" btn btn-round btn-primary" value="Save Details"/>
+     </div>
+   </form>
 
+ </div>
 </div>
 </div>
 </div>
-</div>
-
+<!-- End of form -->
 
 	</section>
 	<!-- cut for addstudent -->
