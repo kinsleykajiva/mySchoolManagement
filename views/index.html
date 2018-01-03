@@ -17,7 +17,9 @@
     <link rel="stylesheet" href="../public/css/animate.min.css" />
     <link rel="stylesheet" href="../public/css/jquery.toast.css" />
     <link href="../public/css/style.css" rel="stylesheet">
+    <link href="../public/css/customes/index.css" rel="stylesheet">
     <!-- cut for viewstudent -->
+    <link rel="stylesheet" href="../public/css/customes/checkBox.css" />
 
     <!-- end: Css -->
 
@@ -228,7 +230,7 @@
      </div>
      </div>
  </div> -->
-
+             
             <div  id="viewRecordContainer" style="display: none;">
                 <div>
                     <div class="panel box-shadow-none content-header">
@@ -521,7 +523,7 @@
 
             </div>
 
-            <div id="tableViewContainer">
+            <div id="tableViewContainer" >
                 <div class="panel box-shadow-none content-header">
                     <div class="panel-body">
                         <div class="col-md-12">
@@ -532,12 +534,41 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 top-20 padding-0">
+                <div id="DeleteDectionContainer" style="display: none;"  class="row">
+                    <div class="col-md-4">.</div>
+
+                <div    >
+               
+                          
+                <div class="col-md-4 text-center">
+                               
+                              <div class="alert col-md-12 col-sm-12 alert-icon alert-danger alert-dismissible fade in" role="alert">
+                                <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                                  <span class="fa fa-exclamation fa-2x"></span></div>
+                                  <div class="col-md-10 col-sm-10">
+                                    <button onClick="recordDeleteDismiss()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span style="color: white;" aria-hidden="true">×</span></button>
+                                    <p><strong>Are sure you want to delete ?</strong><span style="display: none;" id="recID"></span>
+                                        <br> <div class="row">
+                                         <div class="col-md-6">
+                                             <button onClick="recordDelete()" class="btn ripple btn-3d btn-danger"> Yes , Delete  </button>
+                                         </div> 
+                                          <div class="col-md-6">
+                                            <button onClick="recordDeleteDismiss()" class="btn ripple btn-3d btn-default"> No , Cancel  </button>
+                                         </div>
+                                  </div></p>
+
+                                </div>
+                            </div>
+                        </div> 
+             </div>
+             <div class="col-md-4">.</div>
+         </div>
+                <div  class="col-md-12 top-20 padding-0">
                     <div class="col-md-12">
-                        <div class="panel">
+                        <div id="blockTableVieList" class="panel">
                             <div class="panel-body">
 
-                                <div class="row" style="margin: 10px 5px;">
+                                <div  id="searchdiv" class="row" style="margin: 10px 5px;">
                                     <div class="col-md-2">
                                         <div class="input-group">
 
@@ -567,13 +598,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8">
-                                        <label for="searchtxt">Name , Surname , RegNumber </label>
+                                        <label for="searchtxt"> Search by Name , Surname , RegNumber </label>
                                         <div class="input-group">
-                                            <span style="cursor: pointer;" class="input-group-addon"><span class="fa fa-close fa"></span> </span>
+                                            <span id="btnreserSearch" style="cursor: pointer;" class="input-group-addon"><span class="fa fa-close fa"></span> </span>
 
-                                            <input type="text" class="form-control" aria-label="Text input with multiple buttons">
+                                            <input type="text" id="searchtxt" class="form-control" aria-label="Text input with multiple buttons">
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn btn-info" aria-label="Help"><span class="glyphicon glyphicon-search"></span></button>
+                                                <button type="button" onClick="searchData()" class="btn btn-info" aria-label="Help"><span class="glyphicon glyphicon-search"></span></button>
 
                                             </div>
                                         </div>
@@ -588,8 +619,12 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <input type="checkbox" class="custom-control-input" name="checkbox1" id="selectAll" />
-                                                </th>
+
+                                                   <div class="checkbox checkbox-success">
+                                                    <input  class="styled" name="checkbox1" type="checkbox"  id="selectAll"  >
+                                                    <label for="selectAll"> </label>
+                                                </div>
+                                            </th>
                                                 <th>ID</th>
                                                 <th>Name</th>
                                                 <th>Surname</th>
@@ -602,7 +637,9 @@
                                                 </th>
                                             </tr>
                                         </thead>
-                                        <tbody id="showList">
+                                         <tbody id="showList">
+                                         </tbody>
+                                        <tbody id="showListstatus">
 
                                             <tr id="loadingRoweFetch">
                                                 <td>
@@ -641,37 +678,37 @@
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <label style="color: red;">No Record Found!</label>
+                                                        <label style="color: red;">No Record Found !</label>
                                                     </center>
                                                 </td>
                                                 <td>
@@ -687,21 +724,21 @@
                                 <div class="col-md-6" style="padding-top:20px;">
                                     <div class="col-md-6">
 
-                                        <button class="btn ripple btn-3d btn-danger"> <span class="fa fa-remove fa"></span> Delete Selected Rows</button>
+                                        <button id="actOnSelectedRows" class="btn btn-circle btn-mn btn-danger"> <span class="fa fa-remove fa"></span> </button>
 
                                     </div>
-                                    <span>showing 0-10 of 30 items</span>
+                                    <span  id="showingResultsID"></span>
 
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="pagination pull-right">
-                                        <li>
-                                            <a href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
+                                      <!--   <li>
+                                          <a href="#" aria-label="Previous">
+                                              <span aria-hidden="true">&laquo;</span>
+                                          </a>
+                                      </li> -->
                                         <li class="active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
+                                        <!-- <li><a href="#">2</a></li>
                                         <li><a href="#">3</a></li>
                                         <li><a href="#">4</a></li>
                                         <li><a href="#">5</a></li>
@@ -709,7 +746,7 @@
                                             <a href="#" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                             </div>
