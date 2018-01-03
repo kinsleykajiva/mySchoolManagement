@@ -1,0 +1,545 @@
+<template class="task-template">
+	<link rel="stylesheet" href="../public/css/customes/checkBox.css" />
+	<section class="component-section" id="dataContents">
+		<div  id="viewRecordContainer" style="display: none;">
+			<div>
+				<div class="panel box-shadow-none content-header">
+					<div class="panel-body">
+						<div class="col-md-12">
+							<button id="btnViewInFoBacktoListView" class=" animated fadeInLeft btn btn-round btn-primary">
+								<span class="fa fa-arrow-left"></span> Back </button>
+								<h3 class="animated fadeInLeft">Student In View</h3>
+								<p class="animated fadeInDown">
+									Student Registration Number <span class="fa-angle-right fa"></span> 
+									<u>
+										<strong class="text-primary" id="editStudentRegNumberView">cx121211</strong>
+									</u> 
+									&nbsp;&nbsp;&nbsp; Registered on
+									<label class="text-primary" id="showRegDate"> 12/12/12111</label>
+									&nbsp;&nbsp;&nbsp; Class 
+									<u>
+										<label class="text-primary" id="showClass"> 12/12/12111</label> 
+									</u>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 typography padding-0">
+						<div class="col-md-12">
+
+							<div class="col-md-6">
+								<div class="panel">
+									<div class="panel-body">
+										<h3> <span  class="fa fa-user "></span> Student Information </h3>
+
+										<hr>
+
+										<div class="row">
+											<div class="col-md-6"><strong>Full Name</strong>
+												<br>
+												<label id="showFullName">Kajiva sde</label>
+											</div>
+											<div class="col-md-6"> <strong>Age </strong>
+												<br>
+												<label id="ageShow">12 years</label>
+												<br>
+											</div>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-md-6"> <strong>Date of Birth </strong>
+												<br>
+												<label id="dobShow">12/12/1111</label>
+												<br>
+											</div>
+											<div class="col-md-6"><strong>Gender</strong>
+												<br>
+												<label id="genderShow">MAle</label>
+												<br>
+											</div>
+										</div>
+										<hr>
+										<div class="row">
+											<div class="col-md-6"> <strong> Cell Number</strong>
+												<br>
+												<label id="showCellNumber"> 00323 2732</label>
+												<br> </div>
+												<div class="col-md-6"> <strong>Address </strong>
+													<br>
+													<label id="showAddress">xxx xxx xxx</label>
+													<br>
+												</div>
+											</div>
+											<hr>
+											<strong>Email</strong>
+											<br>
+											<a id="showEmail" href="mailto:#">
+												first.last@email.com
+											</a>
+											<br>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="panel">
+										<div class="panel-body">
+											<h3> 
+												<span class="fa  fa-user"></span> Guardians Information 
+											</h3>
+
+											<hr>
+
+											<div class="row">
+												<div class="col-md-6"><strong>Full Name</strong>
+													<br>
+													<label id="GshowFullName">Kajiva sde</label>
+												</div>
+												<div class="col-md-6">
+													<strong>ID Number </strong>
+													<br>
+													<label id="GshowIdNumber">122112 12121</label>
+													<br>
+												</div>
+											</div>
+											<hr>
+
+											<div class="row">
+												<div class="col-md-6"> <strong> Cell Number</strong>
+													<br>
+													<label id="GshowCellNumber"> 00323 2732</label>
+													<br> 
+												</div>
+												<div class="col-md-6"> <strong>Address </strong>
+													<br>
+													<label id="GshowAddress">xxx xxx xxx</label>
+													<br>
+												</div>
+											</div>
+											<hr>
+
+											<strong>Email</strong>
+											<br>
+											<a id="GshowEmail" href="mailto:#">
+												first.last@email.com
+											</a>
+											<br>
+
+											<br>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="editStudentContainer" style="display: none;">
+					<div class="panel box-shadow-none content-header">
+						<div class="panel-body">
+							<div class="col-md-12">
+								<button onclick="EditBacktoListView()" id="btnEditBacktoListView" class=" animated fadeInLeft btn btn-round btn-primary" >
+									<span class="fa fa-arrow-left"></span> Back
+								</button>
+								<h3 class="animated fadeInLeft">Edit Student Details</h3>
+								<p class="animated fadeInDown">
+									Student Registration Number <span class="fa-angle-right fa"></span> 
+									<u>
+										<strong id="editStudentRegNumberView"></strong>
+									</u>
+								</p>
+							</div>
+						</div>
+					</div>
+					<!-- start of form -->
+
+					<div class="col-md-10">
+						<!-- done Process start -->
+						<div class="col-md-6" id="newStuden_NotificationPanel" style="display: none;">
+							<div class="alert alert-success col-md-12 col-sm-12  alert-icon alert-dismissible fade in" role="alert">
+								<div class="col-md-2 col-sm-2 icon-wrapper text-center">
+									<span class="fa fa-check fa-2x"></span></div>
+									<div class="col-md-10 col-sm-10">
+										<!--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> -->
+										<p><strong>Success!</strong> Student Record Updated.</p>
+										<center>
+											<button onclick="aftertEditBacktoListView()" class=" animated fadeInLeft btn btn-round btn-default" /> 
+											<span class="fa fa-arrow-left"></span> Go Back
+										</center>
+									</div>
+								</div>
+							</div>
+
+							<!-- End of Done Process -->
+							<div class="col-md-12 panel" id="formPanel">
+								<div class="col-md-12 panel-heading">
+
+									<h4 id="formHeadingDetails">Student Details</h4>
+
+								</div>
+								<div class="col-md-12 panel-body" style="padding-bottom:30px;">
+									<div class="col-md-12">
+										<form class="cmxform" id="addNewStudentForm" onsubmit="return false;">
+											<div id="studentDetailsSection">
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text" id="divinputClassLevel" style="margin-top:40px !important;">
+
+														<input type="number" max="7" min="1" onkeypress="return isInRange(this)" maxlength="1" class="form-text" id="inputClassLevel" step="1" required>
+														<span class="bar"></span>
+														<label>Class/Grade Level</label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+
+														<input type="text" class="form-text" id="inputClass" required>
+														<span class="bar"></span>
+														<label> 
+															<span class="fa fa-calendar"></span> Class
+														</label>
+													</div>
+												</div>
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text" id="divinputFirstname" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="inputFirstname" required>
+														<span class="bar"></span>
+														<label>Firstname </label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text validate" id="divinputSurname" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="inputSurname" required>
+														<span class="bar"></span>
+														<label>Surname </label>
+													</div>
+												</div>
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text " id="divinputGender" style="margin-top:40px !important;">
+														<select type="email" class="form-text" id="inputGender" required>
+															<option value="null" selected>Choose...</option>
+															<option value="Male">Male</option>
+															<option value="Female">Female</option>
+														</select>
+														<span class="bar"></span>
+														<label>Gender</label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text" id="divinputDobr" style="margin-top:40px !important;">
+														<input type="tel" class="form-text mask-date" id="inputDob" required>
+														<span class="bar"></span>
+														<label for="inputDob">Date Of Birth(dd/MM/YYYY) </label>
+													</div>
+												</div>
+
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text" id="divinputEmail" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="inputEmail" required>
+														<span class="bar"></span>
+														<label>Email Address</label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="tel" class="form-text" id="inputPhoneNumber" required>
+														<span class="bar"></span>
+														<label>Phone Number</label>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+
+														<input type="text" class="form-text" required id="inputAddress">
+														<span class="bar"></span>
+														<label>Physical Address</label>
+													</div>
+												</div>
+											</div>
+											<div id="gardianDetailsSection" style="display: none;">
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="GinputFirstname" required>
+														<span class="bar"></span>
+														<label>Firstname </label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="GinputSurname" required>
+														<span class="bar"></span>
+														<label>Surname </label>
+													</div>
+												</div>
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="GinputID" required>
+														<span class="bar"></span>
+														<label>National Id Number </label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="text" class="form-text" id="GinputAddress" required>
+														<span class="bar"></span>
+														<label>Physical Address </label>
+													</div>
+												</div>
+												<div class="form-row">
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="email" class="form-text" id="GinputEmail" required>
+														<span class="bar"></span>
+														<label>Email Address</label>
+													</div>
+													<div class="form-group col-md-6 form-animate-text" style="margin-top:40px !important;">
+														<input type="tel" class="form-text" id="GinputPhoneNumber" required>
+														<span class="bar"></span>
+														<label>Phone Number</label>
+													</div>
+												</div>
+											</div>
+											<!-- panoo -->
+
+											<div class="col-md-12" style="margin-top: 20px;">
+												
+												<input id="btnEditNextStudentData" class="submit btn  btn-round btn-info" type="button" value="Next">
+												<label id="orJustsaveTxt"> Or </label>
+												<input id="btnEditJustSaveStudentData" class="submit btn  btn-round btn-info" type="button" value="Just Save">
+												<input id="btnEditPrevStudentData" style="display: none;" class="submit btn  btn-round btn-default" type="button" value="Previous">
+												<input id="btnEditSaveStudentData" style="display: none;" type="button" class=" btn btn-round btn-primary" value="Save Changes" />
+											</div>
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of form -->
+
+					</div>
+
+					<div id="tableViewContainer" >
+						<div class="panel box-shadow-none content-header">
+							<div class="panel-body">
+								<div class="col-md-12">
+									<h3 class="animated fadeInLeft">List of Students Details</h3>
+									<p class="animated fadeInDown">
+										Students <span class="fa-angle-right fa"></span> View Students
+									</p>
+								</div>
+							</div>
+						</div>
+						<div id="DeleteDectionContainer" style="display: none;"  class="row">
+							<div class="col-md-4">.</div>
+
+							<div    >
+
+
+								<div class="col-md-4 text-center">
+
+									<div class="alert col-md-12 col-sm-12 alert-icon alert-danger alert-dismissible fade in" role="alert">
+										<div class="col-md-2 col-sm-2 icon-wrapper text-center">
+											<span class="fa fa-exclamation fa-2x"></span></div>
+											<div class="col-md-10 col-sm-10">
+												<button onClick="recordDeleteDismiss()" type="button" class="close" data-dismiss="alert" aria-label="Close"><span style="color: white;" aria-hidden="true">×</span></button>
+												<p><strong>Are sure you want to delete ?</strong><span style="display: none;" id="recID"></span>
+													<br> <div class="row">
+														<div class="col-md-6">
+															<button onClick="recordDelete()" class="btn ripple btn-3d btn-danger"> Yes , Delete  </button>
+														</div> 
+														<div class="col-md-6">
+															<button onClick="recordDeleteDismiss()" class="btn ripple btn-3d btn-default"> No , Cancel  </button>
+														</div>
+													</div></p>
+
+												</div>
+											</div>
+										</div> 
+									</div>
+									<div class="col-md-4">.</div>
+								</div>
+								<div  class="col-md-12 top-20 padding-0">
+									<div class="col-md-12">
+										<div id="blockTableVieList" class="panel">
+											<div class="panel-body">
+
+												<div  id="searchdiv" class="row" style="margin: 10px 5px;">
+													<div class="col-md-2">
+														<div class="input-group">
+
+															<label for="searchtxt">Search Options </label>
+
+															<select>
+																<option>Delete</option>
+																<option>Ignore</option>
+																<option>Cancel</option>
+															</select>
+
+														</div>
+													</div>
+													<div class="col-md-2">
+														<div class="input-group">
+															<label for="searchGradeLevel">Grade Level</label>
+															<select onchange="filterByGrade()" id="searchGradeLevel" class="form-control">
+																<option value="null" selected>Choose...</option>
+																<option value="1">Grade Level 1</option>
+																<option value="2">Grade Level 2</option>
+																<option value="3">Grade Level 3</option>
+																<option value="4">Grade Level 4</option>
+																<option value="5">Grade Level 5</option>
+																<option value="6">Grade Level 6</option>
+																<option value="7">Grade Level 7</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-md-8">
+														<label for="searchtxt"> Search by Name , Surname , RegNumber </label>
+														<div class="input-group">
+															<span id="btnreserSearch" style="cursor: pointer;" class="input-group-addon"><span class="fa fa-close fa"></span> </span>
+
+															<input type="text" id="searchtxt" class="form-control" aria-label="Text input with multiple buttons">
+															<div class="input-group-btn">
+																<button type="button" onClick="searchData()" class="btn btn-info" aria-label="Help"><span class="glyphicon glyphicon-search"></span></button>
+
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<!-- /.row -->
+												<hr>
+												<div class="responsive-table">
+
+													<table id="showingTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+														<thead>
+															<tr>
+																<th>
+
+																	<div class="checkbox checkbox-success">
+																		<input  class="styled" name="checkbox1" type="checkbox"  id="selectAll"  >
+																		<label for="selectAll"> </label>
+																	</div>
+																</th>
+																<th>ID</th>
+																<th>Name</th>
+																<th>Surname</th>
+																<th>Gender</th>
+																<th>D.O.B</th>
+																<th>Class</th>
+																<th>Admission Date</th>
+																<th>
+																	<center> Action </center>
+																</th>
+															</tr>
+														</thead>
+														<tbody id="showList">
+														</tbody>
+														<tbody id="showListstatus">
+
+															<tr id="loadingRoweFetch">
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+																<td>
+																	<center><img id="viewStudentsSpinner" src="../public/images/spinner.gif"></center>
+																</td>
+															</tr>
+															<tr id="noRecordFoundRow" style="display: none;">
+																<td>
+																	<center>
+																		<label style="color: red;">--</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">No Record Found !</label>
+																	</center>
+																</td>
+																<td>
+																	<center>
+																		<label style="color: red;">--</label>
+																	</center>
+																</td>
+															</tr>
+
+														</tbody>
+													</table>
+												</div>
+												<div class="col-md-6" style="padding-top:20px;">
+													<div class="col-md-6">
+
+														<button id="actOnSelectedRows" class="btn btn-circle btn-mn btn-danger"> <span class="fa fa-remove fa"></span> </button>
+
+													</div>
+													<span  id="showingResultsID"></span>
+
+												</div>
+												<div class="col-md-6">
+													<ul class="pagination pull-right">
+                                      <!--   <li>
+                                          <a href="#" aria-label="Previous">
+                                              <span aria-hidden="true">&laquo;</span>
+                                          </a>
+                                      </li> -->
+                                      <li class="active"><a href="#">1</a></li>
+                                        <!-- <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li>
+                                            <a href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="../public/js/frameworks/jquery.mask.min.js"></script>
+
+        <script src="../public/js/customes/viewStudents.js"></script>
+    </template>
