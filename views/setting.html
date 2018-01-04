@@ -1,0 +1,193 @@
+<template class="task-template">
+	 <link rel="stylesheet" type="text/css" href="../public/css/select2.min.css"/>
+	<section class="component-section" id="section_addStudent">
+		 <div id="settingContainer">
+          	   <div class="tabs-wrapper ">             
+     <div class="panel box-shadow-none text-left content-header">
+      <div class="panel-body" style="padding-bottom:0px;">
+        <div class="col-md-12">
+          <h3 class="animated fadeInLeft">System Settings</h3>
+          <p class="animated fadeInDown">
+           Settings <span class="fa-angle-right fa"></span> Settings
+         </p>
+       </div>
+       <ul id="tabs-demo" class="nav nav-tabs content-header-tab" role="tablist" style="padding-top:10px;">
+        <li role="presentation" class="">
+          <a href="#tabs-area-demo" id="tabs2" data-toggle="tab"><i class="fa fa-cog"></i>  User Settings</a>
+        </li>
+        <li role="presentation" class="active">
+          <a href="#panels-area-demo" id="tabs2" data-toggle="tab"><i class="fa fa-cogs"></i> System Settings</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6" id="System_NotificationPanel" style="display: none;">
+  	<div class="alert alert-success col-md-12 col-sm-12  alert-icon alert-dismissible fade in" role="alert">
+  		<div class="col-md-2 col-sm-2 icon-wrapper text-center">
+  			<span class="fa fa-check fa-2x"></span></div>
+  			<div class="col-md-10 col-sm-10">
+  				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+  				<p><strong>Success!</strong> Data Saved.</p>
+  				<center>
+  					<button data-dismiss="alert" onclick="" class=" animated fadeInLeft btn btn-round btn-default" /> 
+  					<span class="fa fa-close"></span> Close
+  				</center>
+  			</div>
+  		</div>
+  	</div>
+
+  <div class="col-md-12 tab-content">
+    <!-- start of tab 1 -->
+    <div role="tabpanel" class="tab-pane fade " id="tabs-area-demo" aria-labelledby="tabs1">
+      <div class="col-md-12">
+
+      </div>
+
+    </div>
+    <!-- end of tab 1 -->
+    <!-- start of tab 2 -->
+    <div role="tabpanel" class="tab-pane fade active in" id="panels-area-demo" aria-labelledby="tabs2">
+     <div class="form-element" id="userSettingContainer">
+      <div class="col-md-12 padding-0">
+        <div class="col-md-8">
+          <div class="panel form-element-padding">
+            <div class="panel-heading">
+             <h4>System Data</h4>
+           </div>
+           <div class="panel-body" style="padding-bottom:30px;">
+            <div class="col-md-12">
+
+              <!-- start of form -->
+              <form class="cmxform" id="addNewStudentForm" onsubmit="return false;">
+              	
+			<label>Set your grade range for the System to use, for example <u> <strong> <small>Grade 1 - 7 or Grade 1-14 or Grade 4-5 etc</small> </strong> </u></label>
+
+              	<div class="form-row" >
+              <div class="form-group col-md-6 form-animate-text" id="" style="margin-top:40px !important;">
+
+                <input type="number"  max="19" min="1" value="1"   onkeypress="return isInRange(this)" maxlength="1" class="form-text"  id="fromClassLevel" step="1"  required>
+                <span class="bar"></span>
+                <label>From Class/Grade Level</label>
+              </div>
+              <div class="form-group col-md-6 form-animate-text" id="" style="margin-top:40px !important;">
+
+                <input type="number"  max="20" min="2" value="7"  onkeypress="return isInRange(this)" maxlength="1" class="form-text" id="toClassLevel" step="1"  required>
+                <span class="bar"></span>
+                <label>To Class/Grade Level</label>
+              </div>
+            </div>
+
+                <div class="form-row" >
+                  <div class="form-group col-md-12 form-animate-text " id="divinputGender" style="margin-top:40px !important;">
+                 
+                   <select class="select2-A" multiple="multiple" style="width: 500px;">
+                          <optgroup label="Colors">
+                            <option value="Blue">Blue</option>
+                            <option value="White"></option>
+                             <option value="Green">Green</option>
+                             <option value="Yellow">Yellow</option>
+                             <option value="Black">Black</option>
+                             <option value="Beige">Beige</option>
+                             <option value="Brown">Brown </option>
+                             <option value="Chocolate">Chocolate</option>
+                             <option value="Coral">Coral</option>
+                             <option value="Cyan">Cyan</option>
+                             <option value="DimGray">DimGray</option>
+                             <option value="Fuchsia">Fuchsia</option>
+                             <option value="Gray">Gray</option>
+                             <option value="Grey">Grey</option>
+                             <option value="Pink">Pink</option>
+                             <option value="Red">Red</option>
+                             <option value="Orange">Orange</option>
+                             <option value="Purple">Purple</option>
+                          </optgroup>
+                          <optgroup label="Alphabet Letters">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+                            <option value="J">J</option>
+                            <option value="K">K</option>
+                            <option value="L">L</option>
+                            <option value="M">M</option>
+                            <option value="N">N</option>
+                            <option value="O">O</option>
+                            <option value="P">P</option>
+                            <option value="Q">Q</option>
+                            <option value="R">R</option>
+                            <option value="S">S</option>
+                            <option value="T">T</option>
+                            <option value="U">U</option>
+                            <option value="V">V</option>
+                            <option value="W">W</option>
+                            <option value="X">X</option>
+                            <option value="Y">Y</option>
+                            <option value="Z">Z</option>
+                            
+                          </optgroup>
+                            <optgroup label="Numbers">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                           
+                          </optgroup>
+                        
+                      
+                         
+                        </select>
+                   <span class="bar"></span>
+                   <label>Select class names Sets for example <small> <strong> {Blue,Yellow,Red} or {C , A , B}</strong> </small> </label>
+                 </div>
+                 
+             </div>
+             
+            <div class="form-row" style="display: none;">
+              <div class="form-group col-md-6 form-animate-text" id="divinputClassLevel" style="margin-top:40px !important;">
+
+                <input type="number"  max="19" min="1"  onkeypress="return isInRange(this)" maxlength="1" class="form-text" id="inputClassLevel" step="1"  required>
+                <span class="bar"></span>
+                <label>Class/Grade Level</label>
+              </div>
+              <div class="form-group col-md-6 form-animate-text" id="divinputClassLevel" style="margin-top:40px !important;">
+
+                <input type="number"  max="20" min="1"  onkeypress="return isInRange(this)" maxlength="1" class="form-text" id="inputClassLevel" step="1"  required>
+                <span class="bar"></span>
+                <label>Class/Grade Level</label>
+              </div>
+            </div>
+
+          </form>
+          <!-- endo of form -->
+          <div class="col-md-12">
+            <div style="margin-top: 20px;" class="clear-fix"></div>
+            <button class="submit btn btn-info" id="Btnsave"  >
+              <i class="fa fa-save"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- end of tab 2 -->
+</div>
+</div>
+
+          </div>
+	</section>
+	<script src="../public/js/frameworks/select2.full.min.js"></script>
+   <script src="../public/js/customes/settings.js"></script>
+</template>
