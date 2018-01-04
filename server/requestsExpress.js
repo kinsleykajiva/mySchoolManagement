@@ -9,6 +9,7 @@ let app = express();
 var bodyParser = require("body-parser");
 let studentDB = require('./DBAccess/Local/Nedb/DBstudentAccess');
 let SysAccessDB = require('./DBAccess/Local/Nedb/DBSystem');
+let feeDB = require('./DBAccess/Local/Nedb/DBFeesAccess');
 
 /*------------------------------------------------------------------------------------------------*/
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -131,8 +132,25 @@ app.post('/getStudentSaveGrade' , function (req , res) {
 
 });
 /*------------------------------------------------------------------------------------------------*/
+app.post('/saveFeeType' , function (req , res) {
+	
+	feeDB.creatFeeType(req.body.typeFee , req.body.descriptionType).then(function  (response) {		
+		res.json(response);
+	}).catch(function () {
+		console.log("An error during saveFeeType()");
+	});
 
+});
 /*------------------------------------------------------------------------------------------------*/
+app.get('/getFeeType' , function (req , res) {
+	
+	feeDB.getFeeTypes().then(function  (response) {		
+		res.json(response);
+	}).catch(function () {
+		console.log("An error during getFeeType()");
+	});
+
+});
 /*------------------------------------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------------------------------------*/

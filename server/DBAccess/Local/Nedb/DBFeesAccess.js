@@ -1,45 +1,38 @@
 let Datastore = require('nedb');
 let db = new Datastore({
-	filename: 'student.db',
+	filename: 'Fees.db',
 	autoload: true
 });
 /*-------------------------------------------------------------------------------------------------------*/
-var fee_type = {
-		'fee_type' :fee_type ,  // TYPE OF FEE (MONTHLY, WEEKLY,ANNUAL,ONE TIME)		
-};
+
 /*-------------------------------------------------------------------------------------------------------*/
-var fees = {
-		'fee_name':fee_name  ,// (eg. TUITION FEE,LAB FEE, HOSTEL FEE,SPORTS FEE
-		'amount' :amount      ,//(CURRENT CHARGE OF THE FEE, could change with time)
-		'whose_paying':payer , // GARDE 4, GARDE 5, GRADE 6
-		'fee_type' :fee_type,  //   TYPE OF FEE (MONTHLY, WEEKLY,ANNUAL,ONE TIME)
-		'bank':bank , // eg ZB , Ammerican bank
-		'description':description , // whats this for
-		'date_':new Date(),
 
-
-};
 /*-------------------------------------------------------------------------------------------------------*/
-var payment_method = {
-		method:method
-};
+/*var payment_method = {
+		'method':method
+};*/
 /*-------------------------------------------------------------------------------------------------------*/
-var fee_payments = {
-			'fee':fee , //fee name
-			'amount':amount ,
-			'date_':new Date()
-			'student_paying':reg_number,
-			'payment_method':payment_method,
-			'bank':bank,
-			'bank_account':bank_account,
-			'description':description // payment doen via what account of what bank
+module.exports.getFeeTypes = function () {
+	return new Promise( function (resolve , reject) {
 
-
+		db.find({},function (err , docs) {
+			if(!err){
+				resolve(docs);
+			}else{
+				reject(err);
+			}
+		});
+	});
 };
 /*-------------------------------------------------------------------------------------------------------*/
 
-module.exports.creatFeeType = function (name) {
-	return new Promise(
+module.exports.creatFeeType = function (fee_type , description) {
+	return new Promise( function (resolve , reject) {
+		fee_type = fee_type +'';
+		var fee_type = {
+			'fee_type': fee_type, // TYPE OF FEE (MONTHLY, WEEKLY,ANNUAL,ONE TIME)
+			'description': description
+		};
 		db.insert(fee_type , function (err ,newDoc) {
 			if(!err){
 				resolve("done");
@@ -47,7 +40,7 @@ module.exports.creatFeeType = function (name) {
 				reject(err);
 			}
 		});
-	);
+	});
 };
 
 /*-------------------------------------------------------------------------------------------------------*/
@@ -89,7 +82,18 @@ module.exports.deleteFeeType = function(id) {
 
 /*-------------------------------------------------------------------------------------------------------*/
 module.exports.createFee = function (name , amount , whose_paying , fee_type , bank , description  ) {
-	return new Promise(
+	return new Promise( function (resolve , reject) {
+		var fees = {
+			'fee_name': name, // (eg. TUITION FEE,LAB FEE, HOSTEL FEE,SPORTS FEE
+			'amount': amount, //(CURRENT CHARGE OF THE FEE, could change with time)
+			'whose_paying': whose_paying, // GARDE 4, GARDE 5, GRADE 6
+			'fee_type': fee_type, //   TYPE OF FEE (MONTHLY, WEEKLY,ANNUAL,ONE TIME)
+			'bank': bank, // eg ZB , Ammerican bank
+			'description': description, // whats this for
+			'date_': new Date(),
+
+
+		};
 		db.insert(fees , function (err , newDoc) {
 			if(!err){
 				resolve("done");
@@ -97,7 +101,7 @@ module.exports.createFee = function (name , amount , whose_paying , fee_type , b
 				reject(err);
 			}
 		});
-	);
+	});
 }
 /*-------------------------------------------------------------------------------------------------------*/
 
@@ -121,8 +125,20 @@ module.exports.deleteFee = function (id ) {
 
 /*---------------------------------------############################------------------------------------*/
 
-module.exports.payFees = function(fee , amount , student_paying , payment_method , bank , bank_account , description ){
-			return new Promise(
+module.exports.payFees = function(fee , amount , reg_number , payment_method , bank , bank_account , description ){
+			return new Promise( function (resolve , reject) {
+				var fee_payments = {
+					'fee': fee, //fee name
+					'amount': amount,
+					'date_': new Date() ,
+					'student_paying': reg_number,
+					'payment_method': payment_method,
+					'bank': bank,
+					'bank_account': bank_account,
+					'description': description // payment doen via what account of what bank
+
+
+				};
 				db.insert(fee_payments, function (err , newDoc) {
 					if(!err){
 						resolve("done");
@@ -130,7 +146,7 @@ module.exports.payFees = function(fee , amount , student_paying , payment_method
 						reject(err);
 					}
 				});
-			);
+			}	);
 };
 
 /*-------------------------------------------------------------------------------------------------------*/
