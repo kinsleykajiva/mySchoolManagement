@@ -59,7 +59,18 @@ module.exports.updateClassLevel = function (id, oldLevel , newLevel) {
 /*---------------------------------------############################------------------------------------*/
 /*-------------------------------------------------------------------------------------------------------*/
 
-
+module.exports.getClassDetails = function () {
+	return new Promise(function (resolve , reject) {
+		db.find({},function (err , docs) {
+			
+			if(!err){
+				resolve(docs);
+			}else{
+				reject(err);
+			}
+		});
+	});
+};
 /*-------------------------------------------------------------------------------------------------------*/
 
 

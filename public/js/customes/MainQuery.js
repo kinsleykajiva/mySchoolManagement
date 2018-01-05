@@ -28,18 +28,46 @@ const notificationsShowwTime = 7500;
 /*********************************************************************************************/
 
 /*********************************************************************************************/
+function dateConvertor (zDate) {
+	let  mydate = new Date(zDate);
+	return (mydate.toDateString());
+}
+/*********************************************************************************************/
+function getDateConvertion(zdate){
+	let date = new Date(zdate);
+	return  ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+}
+
+/*********************************************************************************************/
+String.prototype.replaceAll2 = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
 
 /*********************************************************************************************/
-
+function rangeArray(start, end) {
+	let myArray = [];
+	for (let i = start; i <= end; i += 1) {
+		myArray.push(i);
+	}
+	return myArray;
+}
+/*********************************************************************************************/
+function resizeWindow(){
+     window.resizeTo(800,600);
+}
 
 /*********************************************************************************************/
+function makeSureOfExit(){
+    $(document).unload(function(){
+        if(confirm('Are you sure you want to exit?')){
+             return true;
+        }
 
-/*********************************************************************************************/
-
-
-/*********************************************************************************************/
-
+        return false;
+    });
+}
 
 /*********************************************************************************************/
 function loadingScreenElement(elementID, show, message) {

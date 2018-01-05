@@ -26,13 +26,14 @@ module.exports.getFeeTypes = function () {
 };
 /*-------------------------------------------------------------------------------------------------------*/
 
-module.exports.creatFeeType = function (fee_type , description) {
-	return new Promise( function (resolve , reject) {
-		fee_type = fee_type +'';
-		var fee_type = {
-			'fee_type': fee_type, // TYPE OF FEE (MONTHLY, WEEKLY,ANNUAL,ONE TIME)
+module.exports.creatFeeType = function ( fee , description) {
+	return new Promise( function (resolve , reject) {	
+
+		let fee_type = {
+			'fee_type': fee , // TYPE OF FEE (MONTHLY, WEEKLY,ANNUAL,ONE TIME)
 			'description': description
 		};
+
 		db.insert(fee_type , function (err ,newDoc) {
 			if(!err){
 				resolve("done");
@@ -81,7 +82,7 @@ module.exports.deleteFeeType = function(id) {
 
 
 /*-------------------------------------------------------------------------------------------------------*/
-module.exports.createFee = function (name , amount , whose_paying , fee_type , bank , description  ) {
+module.exports.createFee = function (name , amount , whose_paying , fee_type , bank , method  , description  ) {
 	return new Promise( function (resolve , reject) {
 		var fees = {
 			'fee_name': name, // (eg. TUITION FEE,LAB FEE, HOSTEL FEE,SPORTS FEE
@@ -91,8 +92,7 @@ module.exports.createFee = function (name , amount , whose_paying , fee_type , b
 			'bank': bank, // eg ZB , Ammerican bank
 			'description': description, // whats this for
 			'date_': new Date(),
-
-
+			'payment_method':method,
 		};
 		db.insert(fees , function (err , newDoc) {
 			if(!err){
@@ -151,7 +151,17 @@ module.exports.payFees = function(fee , amount , reg_number , payment_method , b
 
 /*-------------------------------------------------------------------------------------------------------*/
 
-
+module.exports.getFees = function () {
+	return new Promise(function (resolve , reject) {
+		db.find({},function (err , docs) {
+			if(!err){
+				resolve(docs);
+			}else{
+				reject(err);
+			}
+		});
+	});
+};
 
 
 /*-------------------------------------------------------------------------------------------------------*/

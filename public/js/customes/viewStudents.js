@@ -736,15 +736,7 @@ function diableSearchFunctions (is) {
 }
 
 /*********************************************************************************************/
-function dateConvertor (zDate) {
-	let  mydate = new Date(zDate);
-	return (mydate.toDateString());
-}
-/*********************************************************************************************/
-function getDateConvertion(zdate){
-	let date = new Date(zdate);
-	return  ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
-}
+
 /*********************************************************************************************/
 function getAge(dateString) {
     let  today = new Date();

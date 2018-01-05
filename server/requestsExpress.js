@@ -132,11 +132,23 @@ app.post('/getStudentSaveGrade' , function (req , res) {
 
 });
 /*------------------------------------------------------------------------------------------------*/
+app.get('/getClassDetails' , function (req , res) {
+	
+	SysAccessDB.getClassDetails().then(function  (response) {		
+		res.json(response);
+	}).catch(function (err) {
+		console.log(err)
+		console.log("An error during getClassDetails()");
+	});
+
+});
+/*------------------------------------------------------------------------------------------------*/
 app.post('/saveFeeType' , function (req , res) {
 	
-	feeDB.creatFeeType(req.body.typeFee , req.body.descriptionType).then(function  (response) {		
+	feeDB.creatFeeType( req.body.feee , req.body.descriptionType).then(function  (response) {		
 		res.json(response);
-	}).catch(function () {
+	}).catch(function ( err) {
+		console.log(err)
 		console.log("An error during saveFeeType()");
 	});
 
@@ -146,15 +158,36 @@ app.get('/getFeeType' , function (req , res) {
 	
 	feeDB.getFeeTypes().then(function  (response) {		
 		res.json(response);
-	}).catch(function () {
+	}).catch(function (err) {
+		console.log(err)
 		console.log("An error during getFeeType()");
 	});
 
 });
 /*------------------------------------------------------------------------------------------------*/
+app.post('/saveNewFee' , function (req , res) {
+	
+	feeDB.createFee( req.body.feeName ,req.body.FeeAmount   , req.body.student_payingFee    , 
+	 req.body.studentFeeTypelist,   req.body.feeBankName ,req.body.payment_methodFee    , req.body.remarkFee )
+	.then(function  (response) {		
+		res.json(response);
+	}).catch(function ( err) {
+		console.log(err)
+		console.log("An error during saveNewFee()");
+	});
 
+});
 /*------------------------------------------------------------------------------------------------*/
+app.get('/getFees' , function (req , res) {
+	
+	feeDB.getFees().then(function  (response) {		
+		res.json(response);
+	}).catch(function (err) {
+		console.log(err)
+		console.log("An error during getFees()");
+	});
 
+});
 /*------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------------------------*/
