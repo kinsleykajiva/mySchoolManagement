@@ -20,13 +20,40 @@ const notificationsShowwTime = 7500;
 /*********************************************************************************************/
 
 /*********************************************************************************************/
-
+function randString(x){
+    var s = "";
+    while(s.length<x&&x>0){
+        var r = Math.random();
+        s+= (r<0.1?Math.floor(r*100):String.fromCharCode(Math.floor(r*26) + (r>0.5?97:65)));
+    }
+    return s;
+}
 
 /*********************************************************************************************/
-
-
+/**
+ * Gets the random integer between min and max (both included)
+ *
+ * @param      {number}  min     The minimum
+ * @param      {number}  max     The maximum
+ * @return     {<type>}  The random integer.
+ */
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
 /*********************************************************************************************/
+function receiptNumber () {
+	
+	let ret = "";
+	ret = getcurrentDate()  ;  //  dd + '/' + mm + '/' + yyyy;
+	let dd = ret.split('/')[0];
+	let mm = ret.split('/')[1];
+	let yyyy = ret.split('/')[2];
+	let ranS = randString(getRndInteger(5,8)).toUpperCase();
+	ret = dd + ranS.substring(2,4)+ ranS.charAt(getRndInteger(1,2)) + '-' + mm +'-'+ ranS.charAt(getRndInteger(1,4))+yyyy ;
+	
 
+	return ret;
+}
 /*********************************************************************************************/
 function dateConvertor (zDate) {
 	let  mydate = new Date(zDate);

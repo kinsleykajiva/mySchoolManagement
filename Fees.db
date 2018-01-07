@@ -2,4 +2,3 @@
 {"fee_type":"INSURANCE","description":"insure","_id":"AaYOehXAalFVsbZU"}
 {"fee_name":"Adminsions","amount":"20","whose_paying":"all","fee_type":"dcdd","bank":"ZB","description":"When needed at school","date_":{"$$date":1515150563808},"payment_method":"TransFeer","_id":"GKi1KLTl3dpN9vmk"}
 {"fee_type":"WeekLELY","description":"charge","_id":"ISSD7b23q7ytQd2L"}
-{"fee_name":"asreer","amount":"322","whose_paying":"all","fee_type":"dcdd","bank":"ZB","description":"xcvxcv","date_":{"$$date":1515148788830},"payment_method":"TransFeer","_id":"VSxNatjDFIwOFqsC"}

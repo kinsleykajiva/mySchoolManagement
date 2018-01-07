@@ -10,6 +10,7 @@ var bodyParser = require("body-parser");
 let studentDB = require('./DBAccess/Local/Nedb/DBstudentAccess');
 let SysAccessDB = require('./DBAccess/Local/Nedb/DBSystem');
 let feeDB = require('./DBAccess/Local/Nedb/DBFeesAccess');
+let feePayment = require('./DBAccess/Local/Nedb/DBFeesPaymentsAccess');
 
 /*------------------------------------------------------------------------------------------------*/
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,7 +33,7 @@ app.post('/getStudentDataSearchGrade' , function (req , res) {
 	studentDB.searchStudentGrade(req.body.query , req.body.grad_).then(function  (response) {		
 		res.json(response);
 	}).catch(function () {
-		console.log("An error during searchStudentGrade()");
+		console.log("An error during getStudentDataSearchGrade()");
 	});
 
 });
@@ -54,7 +55,7 @@ app.post('/getStudentDataSearch' , function (req , res) {
 	studentDB.searchStudents(req.body.query).then(function  (response) {		
 		res.json(response);
 	}).catch(function () {
-		console.log("An error during searchStudents()");
+		console.log("An error during getStudentDataSearch()");
 	});
 
 });
@@ -180,7 +181,7 @@ app.post('/saveNewFee' , function (req , res) {
 /*------------------------------------------------------------------------------------------------*/
 app.get('/getFees' , function (req , res) {
 	
-	feeDB.getFees().then(function  (response) {		
+	feePayment.getFees().then(function  (response) {		
 		res.json(response);
 	}).catch(function (err) {
 		console.log(err)
@@ -189,7 +190,29 @@ app.get('/getFees' , function (req , res) {
 
 });
 /*------------------------------------------------------------------------------------------------*/
+app.get('/getOneStudentFees' , function (req , res) {
+	
+	feePayment.getStudentPayments(req.body.reg_num).then(function  (response) {		
+		res.json(response);
+	}).catch(function (err) {
+		console.log(err)
+		console.log("An error during getOneStudentFees()");
+	});
+
+});
 /*------------------------------------------------------------------------------------------------*/
+app.post('/payFees' , function (req , res) {
+	
+	feePayment.payFees( req.body.amountPay , req.body.studentRegNumberPay ,req.body.paymentMethodPay , 
+		req.body.bankPay , req.body.accountNoPay  , req.body.commentPay  , req.body.receptNumberPay )
+	.then(function  (response) {		
+		res.json(response);
+	}).catch(function ( err) {
+		console.log(err)
+		console.log("An error during payFees()");
+	});
+
+});
 /*------------------------------------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------------------------------------*/

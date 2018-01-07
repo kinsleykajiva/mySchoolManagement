@@ -117,9 +117,366 @@
         <!-- start: Content -->
         <div id="content">
 
-        
-           
-         
+            <div id="feesPaymentContainer">
+                <div class="tabs-wrapper">
+                    <div class="panel box-shadow-none text-left content-header">
+                     <div class="panel-body" style="padding-bottom:0px;">
+                        <div class="col-md-12">
+                            <h3 class="animated fadeInLeft">Fees Payment</h3>
+                          <p class="animated fadeInDown">
+                             Fees <span class="fa-angle-right fa"></span> Pay Student Fees
+                         </p>
+                     </div>
+                     <ul id="tabs-demo" class="nav nav-tabs content-header-tab" role="tablist" style="padding-top:10px;">
+                        <li role="presentation" class="active">
+                          <a href="#tabs-area-demo" id="tabs2" data-toggle="tab"> <i class="fa fa-credit-card"></i>  Pay Student Fees</a>
+                      </li>
+                      <li role="presentation" class="">
+                          <a href="#panels-area-demo" id="tabs2" data-toggle="tab"> <i class="fa fa-cogs"></i> System Settings</a>
+                      </li>
+                  </ul>
+              </div>
+
+          </div>
+          <div id="destinationMinimisedDiv" class="btn-round" style="margin: 0 20px;background-color: #d6d3d3e8;">
+            
+          </div>
+          <div class="col-md-6" id="FeesSystem_NotificationPanel" style="display: none;">
+            <div class="alert alert-success col-md-12 col-sm-12  alert-icon alert-dismissible fade in" role="alert">
+                <div class="col-md-2 col-sm-2 icon-wrapper text-center">
+                    <span class="fa fa-check fa-2x"></span></div>
+                    <div class="col-md-10 col-sm-10">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <p><strong>Success!</strong> Data Saved.</p>
+                        <center>
+                            <button data-dismiss="alert" onclick="" class=" animated fadeInLeft btn btn-round btn-default" /> 
+                            <span class="fa fa-close"></span> Close
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 tab-content">
+               <!-- start of tab 1 -->
+               <div role="tabpanel" class="tab-pane fade active in" id="tabs-area-demo" aria-labelledby="tabs1">
+                <div class="col-md-12">
+                    <div>
+               
+                    <div class="col-md-12 typography padding-0">
+                        <div class="col-md-12">
+
+                            <div class="col-md-6">
+                                <div class="panel">
+                                    <div class="panel-body">
+
+                                        <h5> <span  class="fa fa-user "></span> Find Student by  </h5>  
+
+
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Registration Number</strong>
+                                                <br>
+                                                <input type="text" id="searchRegNumber">
+                                            </div>
+                                            <div class="col-md-6"> <strong> Name or Surname </strong>
+                                                <br>
+                                               <input type="text" id="searchNameSurname" placeholder="name or surname">
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <hr>                                      
+                                           
+                                            <div>
+                                                <button id="btnfindStudentFeeSearch" class="btn btn-round btn-info">
+                                                    <i class="fa fa-search"></i> Find
+                                                </button>                                          
+                                            </div>
+                                           
+                                            <br>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" id="viewStudentDatadiv" style="display: none;">
+                                    <div id="kill"></div>
+                                     <button id="btnmaximise_DiviewStudentDatadiv" onClick="maximise_DiviewStudentDatadiv()" class="btn btn-round btn-primary" data-toggle="tooltip" data-placement="left" title="Maximise View" style="display: none;" > 
+                                                    <i class="fa fa-get-pocket"></i> | Search 
+                                                </button>
+                                    <div class="panel" id="viewStudentDatadivPanel">
+                                        <div class="panel-body">
+
+                                          <div class="row">
+                                              <div class="col-md-8">
+                                                  <h5> 
+                                                <span class="fa  fa-list"></span> <span id="status_studentSearch">Students found</span>
+                                            </h5>
+                                             
+                                              </div>
+                                              <div class="col-md-4">
+                                                  <button data-toggle="tooltip" data-placement="left" title="Minimise" class="btn btn-round btn-primary" onClick="minimise_DiviewStudentDatadiv()" disabled id="minimise_DiviewStudentDatadiv" > 
+                                                    <i class="fa fa-minus"></i>
+                                                </button> 
+                                                 <button data-toggle="tooltip" data-placement="top" title="Close" class="btn btn-round btn-warning" onClick="close_DiviewStudentDatadiv()"> 
+                                            <i class="fa fa-close"></i>
+                                        </button> 
+                                              </div>
+                                          </div>   
+                                             <center id="loadingstudentSearch" style ="display: none;">
+                                                    <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
+                                                    <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
+                                                </center>
+                                            <hr>
+                                            <div id="feeSearchtableListResults" style="display: none;">
+
+                                                <div class="responsive-table">
+                                                    <table id="showingTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Reg #</th>
+                                                                <th>Full Name</th>
+                                                                <th> <center><i class="fa fa-chain"></i></center> </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="feeStudentSearchResults">
+                                                            <tr>
+                                                                <td>12321232131231</td>
+                                                                <td>NAme sds asdsd</td>
+                                                                <td><a href="javascript::void(0)">Select</a> </td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>
+
+
+                                           
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" id="studentFeesHistoryDiv" style="display: none;">
+
+                                   <div id="killFeeshistory"></div>
+                                   <button id="btnmaximise_DiviewStudentFeesHistorydiv" onClick="maximise_DiviewStudentFeesHistorydiv()" class="btn btn-round btn-primary" data-toggle="tooltip" data-placement="top" title="Maximise View" style="display: none;" > 
+                                    <i class="fa fa-get-pocket"></i> | Fees History 
+                                </button>
+                                <div class="panel" id="viewStudentFeesHistorydivPanel">
+                                    <div class="panel-body">
+                                         <div class="row">
+                                              <div class="col-md-8">
+                                                  <h5> 
+                                                <span class="fa  fa-table"></span> <span id="status_studentTableHistory">Student Payment History</span>
+                                            </h5>
+                                             
+                                              </div>
+                                              <div class="col-md-4">
+                                                  <button data-toggle="tooltip" data-placement="left" title="Minimise" class="btn btn-round btn-primary" onClick="minimise_DiviewStudentFeesHistorydiv()" id="minimise_DiviewStudentFeesHistorydiv" > 
+                                                    <i class="fa fa-minus"></i>
+                                                </button> 
+                                                <button data-toggle="tooltip" data-placement="top" title="Close" class="btn btn-round btn-warning" onClick="close_DiviewStudentFeesHistorydiv()" > 
+                                                    <i class="fa fa-close"></i>
+                                                </button> 
+                                                 <button  style="display: none;" data-toggle="tooltip" data-placement="top" title="Close" class="btn btn-round btn-warning" id="refresh_DiviewStudentFeesHistorydiv" onClick="refresh_DiviewStudentFeesHistorydiv()"> <span  style="display: none;" id="refresh_DiviewStudentFeesHistorydivText"></span>
+                                                    <i class="fa fa-refresh"></i> 
+                                                </button> 
+                                              </div>
+                                          </div>   
+                                             <center id="loadingstudentFeeHistory" style ="display: none;">
+                                                    <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
+                                                    <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
+                                                     <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
+                                                    
+                                                     <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">                                                    
+                                                </center>
+                                            <hr>
+                                            <div id="StudentFeesHistorytableListResults" style="display: none;">
+
+                                                <div class="responsive-table">
+                                                    <table id="StudentFeesHistoryshowingTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Date</th>                                                                
+                                                                <th><i class="fa fa-dollar"></i> Paid</th>
+                                                                <th>Method</th>
+                                                                <th>Receipt.No</th>
+                                                                <th> <center><i class="fa fa-chain"></i></center> </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="StudentFeesHistorySearchResults">
+                                                            <tr>
+                                                                <td>12/22/1212</td>
+                                                                <td>1222.12</td>
+                                                                <td>cash</td>
+                                                                <td>R212C-1</td>
+                                                                <td><a href="javascript::void(0)">View</a> </td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tbody>
+                                                            <tr></tr>
+                                                        </tbody>                                                        
+                                                        <tbody >
+                                                            <tr id="studentFeeHistoryTotal" style="display: none;">
+                                                                <td colspan="1">Total <i class="fa fa-dollar"></i></td>
+                                                                <td id="studentFeeHistoryTotalValue" colspan="4" class="text-right" style="font-weight: bolder;color: black; text-decoration: underline;"> 2300-23</td>
+                                                                
+                                                            </tr>
+                                                             <tr id="studentFeeHistoryBalance"  style="display: none;">
+                                                                <td colspan="1">Balance <i class="fa fa-dollar"></i></td>
+                                                                <td id="studentFeeHistoryBalanceValue" colspan="4" class="text-right" style="font-weight: bolder;color: black; text-decoration: underline;"> 45001-11</td>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+
+                                                    </table>
+                                                    
+                                                </div>
+                                            </div>   
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                           
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 typography padding-0">
+                            <div class="row">
+                                <div class="col-md-8">
+                                     <div id="showmakePaymentDiv" class="panel">
+                            <div class="panel-heading btn-info">
+                                <h4>
+                                    <strong>
+                                        Payment Details.
+                                    </strong>
+                                </h4>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                     <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon3">Student Reg.No</span>
+                                        <input type="text" readonly class="form-control" id="studentRegNumberPay" aria-describedby="basic-addon3">
+                                    </div>                                   
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                         <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon3">
+                                            <i class="fa fa-barcode"></i> Receipt Number
+                                        </span>
+                                        <input type="text" readonly class="form-control" id="receptNumberPay" aria-describedby="basic-addon3">
+                                    </div>
+                                        
+                                    </div>
+                                </div>
+                                <hr>
+                                 <div class="row">
+                                    <div class="col-md-6">
+
+                                         <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon3">
+                                            <i class="fa fa-dollar"></i> Amount
+                                        </span>
+                                        <input type="text" class="form-control" id="amountPay" aria-describedby="basic-addon3">
+                                    </div>
+                                        
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                     <div class="input-group">
+                                        <label>Payment Method&nbsp;&nbsp;&nbsp;</label>
+                                       <select onchange="onChangeBank()"  class="form-group" id="paymentMethodPay">
+                                           <option value="null">Choose..</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Mobile">Mobile Transfer</option>
+                                        <option value="TransFeer">Bank Transfer</option>
+                                        <optgroup label="Mobile">
+                                            <option value="EcoCash">EcoCash</option>
+                                            <option value="TeleCash">TeleCash</option>
+                                            <option value="NetCash">NetCash</option>
+                                        </optgroup>
+                                       </select>
+                                    </div>                                   
+
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                         <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon3">
+                                            <i class="fa fa-bank"></i> Bank
+                                        </span>
+                                        <input type="text" class="form-control" id="bankPay" aria-describedby="basic-addon3">
+                                    </div>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+
+                                         <div class="input-group">
+                                        <span class="input-group-addon" id="basic-addon3">
+                                            <i class="fa fa-bookmark"></i> Account No.
+                                        </span>
+                                        <input type="text" class="form-control" id="accountNoPay" aria-describedby="basic-addon3">
+                                    </div>
+                                        
+                                    </div>
+                                    <hr>
+                                   <div class="col-md-10">
+                                        <div class="input-group ">
+                                        <span class="input-group-addon" id="basic-addon3">
+                                            <i class="fa fa-commenting"></i> Comment
+                                        </span>
+                                        <input type="text" class="form-control" id="commentPay" aria-describedby="basic-addon3">
+                                    </div>
+                                   </div>
+                                   
+                                   <div class="row" >
+                                       <div class="col-md-4" style="padding: 10px; margin:15px;">
+                                           <button id="btnPayPayFees" class="btn btn-round btn-primary"> <i class="fa fa-save"></i> Pay Fees</button>
+                                           <button id="resetPay" class="btn btn-round btn-default"> <i class="fa fa-remove"></i> Reset</button>
+                                       </div>
+                                      
+                                   </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                                </div>
+                                
+                            </div>
+                          
+                    </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- end of tab 1 -->
+            <!-- start of tab 2 -->
+            <div role="tabpanel" class="tab-pane fade " id="tabs-area-demo" aria-labelledby="tabs2">
+                <div class="col-md-12">
+
+                </div>
+
+            </div>
+            <!-- end of tab 2 -->
+
+
+        </div>
+
+    </div>
+</div>
            
         </div>
         <!-- end: content -->
@@ -156,10 +513,9 @@
     <script src="../public/js/frameworks/jquery.nicescroll.js"></script>
     <!-- custom -->
     <script src="../public/js/frameworks/main.js"></script>
+    <script type="text/javascript" src="../public/js/frameworks/jquery-parent-to-animate.js"></script>
 
-	
-
-   
+     <script src="../public/js/customes/feesPayment.js"></script>  
 
     
 

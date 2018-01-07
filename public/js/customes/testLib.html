@@ -1,0 +1,25 @@
+<div style="margin: 0 auto;">
+
+	<center>
+		<span id="status"></span><br><br>
+		<span id="status2"></span><br><br>
+		<span id="status3"></span><br><br>
+		<hr>
+		<input type="text" id="xx" > <br>
+		<button  onclick="dow()" >Test</button>
+	</center>
+
+	<script type="text/javascript" src="testlib.js"></script>
+	<script type="text/javascript">
+		function dow () {
+			
+			_("status").innerHTML = convertNumberToWords(_("xx").value );
+			_("status2").innerHTML = words(parseInt(_("xx").value) );
+			_("status3").innerHTML = randString(parseInt(_("xx").value) );
+		}
+		function _ (ob) {
+			return document.getElementById(ob);
+		}
+	</script>
+	
+</div>

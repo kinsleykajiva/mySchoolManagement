@@ -125,55 +125,6 @@ module.exports.deleteFee = function (id ) {
 
 /*---------------------------------------############################------------------------------------*/
 
-module.exports.payFees = function(fee , amount , reg_number , payment_method , bank , bank_account , description ){
-			return new Promise( function (resolve , reject) {
-				var fee_payments = {
-					'fee': fee, //fee name
-					'amount': amount,
-					'date_': new Date() ,
-					'student_paying': reg_number,
-					'payment_method': payment_method,
-					'bank': bank,
-					'bank_account': bank_account,
-					'description': description // payment doen via what account of what bank
-
-
-				};
-				db.insert(fee_payments, function (err , newDoc) {
-					if(!err){
-						resolve("done");
-					}else{
-						reject(err);
-					}
-				});
-			}	);
-};
-
-/*-------------------------------------------------------------------------------------------------------*/
-
-module.exports.getFees = function () {
-	return new Promise(function (resolve , reject) {
-		db.find({},function (err , docs) {
-			if(!err){
-				resolve(docs);
-			}else{
-				reject(err);
-			}
-		});
-	});
-};
-
-
-/*-------------------------------------------------------------------------------------------------------*/
-
-
-/*---------------------------------------############################------------------------------------*/
-/*-------------------------------------------------------------------------------------------------------*/
-
-
-/*-------------------------------------------------------------------------------------------------------*/
-
-
 
 /*-------------------------------------------------------------------------------------------------------*/
 
