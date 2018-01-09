@@ -13,11 +13,38 @@ const notificationsShowwTime = 7500;
 
 /*********************************************************************************************/
 
+/*********************************************************************************************/
+
+/*********************************************************************************************/
+
+/*********************************************************************************************/
 
 /*********************************************************************************************/
 
 
 /*********************************************************************************************/
+
+/*********************************************************************************************/
+
+/*********************************************************************************************/
+function getSchoolPhoneNumber() {
+	return "263 232 232";
+}
+/*********************************************************************************************/
+
+function getSchoolAddress() {
+	return "Location in City , City, Number";
+}
+/*********************************************************************************************/
+function getSchoolName() {
+	return "Secondary High School";
+}
+
+/*********************************************************************************************/
+
+function getSystemName() {
+	return "My School Management";
+}
 
 /*********************************************************************************************/
 function randString(x){
@@ -221,7 +248,46 @@ function getcurrentDate() {
 
 }
 /*********************************************************************************************/
-
+/*  This seeks to remove the long text of selectors in JQuery .Sets the text to html object
+* @obj - html object ID
+* @txt - text to set to the object passed
+*/
+function _txt(obj ,txt) {
+   $("#" + obj).text(txt);
+}
+/* ------------------------------------------------------------------------------------------ */
+/*  This seeks to remove the long text of selectors in JQuery .Sets the value to html object
+* @obj - html object ID
+* @val - val to set to the object passed
+*/
+function _vv(obj,val) {
+   $("#" + obj).val(val);
+}
+/* ------------------------------------------------------------------------------------------ */
+/*  This seeks to remove the long text of selectors in JQuery .
+* @obj - html object ID
+* @return -value
+*/
+function _v(obj) {
+  return $("#" + obj).val();
+}
+/* ------------------------------------------------------------------------------------------ */
+/*  This seeks to remove the long text of selectors in JQuery .
+* @obj - html object ID
+* 
+*/
+function _t(obj) {
+  return $("#" + obj).text();
+}
+/* ------------------------------------------------------------------------------------------ */
+/*  This seeks to remove the long text of selectors in JQuery .
+* @obj - html object ID
+* @return - returns with html object
+*/
+function __(obj) {
+  return $("#" + obj);
+}
+/* ------------------------------------------------------------------------------------------ */
 function _(ob) {
 	return documentElement.getElementById(ob);
 }

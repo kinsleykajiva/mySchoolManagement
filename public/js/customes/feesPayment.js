@@ -8,7 +8,7 @@ const ipcRenderer = require("electron").ipcRenderer;
 
 /*********************************************************************************************/
 function sendCommandToWorker(content) {
-  ipcRenderer.send("printPDF", content);
+  ipcRenderer.send("openInvoiceWindow", content);
 }
 /*********************************************************************************************/
 $("#studentHistoryFeeHistory").click(function(){

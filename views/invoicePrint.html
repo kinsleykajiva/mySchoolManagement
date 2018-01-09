@@ -17,31 +17,126 @@
     <link href="../public/css/style.css" rel="stylesheet">
     <!-- end: Css -->
 </head>
+<style>
+      .blink {
+      animation: blink 2s steps(5, start) infinite;
+      -webkit-animation: blink 1s steps(5, start) infinite;
+    }
+    @keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+    @-webkit-keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+</style>
 
 <body id="mimin">
 
     <div class="container invoice invoice-v1">
 
-        <nav class="navbar navbar-default header invoice-v1-tool container navbar-fixed-top">
+        <nav id="containerNav" class="navbar navbar-default header invoice-v1-tool container navbar-fixed-top">
             <div class="col-md-12 nav-wrapper">
                 <div class="navbar-header" style="width:100%;">
                     <a href="/" onclick="return false;" class="navbar-brand">
                         <img style="width:50px;height:45px; margin-top:-10px;" src="../public/images/printer_128.png" class="invoice-logo"  />
                         <i class="fa fa-printer fa invoice-logo"></i>
-                        <b>Invoice</b>
+                        <b>
+                            <span >
+                                <i id="statusIcon" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i>
+                                <label id="readyStatus" > &nbsp;Processing</label>
+                            </span>
+                        </b>
                     </a>
 
                     <ul class="nav navbar-nav navbar-right user-nav">
                         <li>
-                            <button class="btn btn-round btn-primary" style="margin-top:10px;">Print</button>
+                            
+                            <button onclick="printPage()" class="btn btn-round btn-primary" style="margin-top:10px;">
+                                <i class="fa fa-print blink"></i>&nbsp;    Print
+                            </button>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        
         <!-- start: Content -->
         <div class="panel invoice-v1-content">
-            <div class="panel-body">
+            <div class="panel-body" id="otherTableContentContainer">
+                <div class="col-md-12">
+                    <div class="responsive-table">
+                         <div class="row">
+                             <div class="col-6" >
+                                 Print out for:
+                                <b>
+                                    <strong>
+                                        <h3>Student 12221</h3> 
+                                    </strong>
+                                </b>
+                                <br>
+                                Printed on : <h3 ><label id="printOutDate">12/12/1211</label></h3>
+                             </div>
+                         </div>
+                        <table id="StudentFeesHistoryshowingTable" class="table table-striped table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                
+                                <tr>
+                                    <th>Date</th>
+                                    <th>
+                                        <i class="fa fa-dollar"></i> Paid</th>
+                                    <th>Method</th>
+                                    <th>Receipt.No</th>
+                                    <th>
+                                        <center>
+                                            <i class="fa fa-chain"></i>
+                                        </center>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="StudentFeesHistorySearchResults">
+                                <tr>
+                                    <td>12/22/1212</td>
+                                    <td>1222.12</td>
+                                    <td>cash</td>
+                                    <td>R212C-1</td>
+                                    <td>
+                                        <a href="javascript::void(0)">View</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                            <tbody>
+                                <tr id="studentFeeHistoryTotal" style="display: none;">
+                                    <td colspan="1">Total
+                                        <i class="fa fa-dollar"></i>
+                                    </td>
+                                    <td id="studentFeeHistoryTotalValue" colspan="4" class="text-right" style="font-weight: bolder;color: black; text-decoration: underline;">
+                                    2300-23</td>
+                    
+                                </tr>
+                                <tr id="studentFeeHistoryBalance" style="display: none;">
+                                    <td colspan="1">Balance
+                                        <i class="fa fa-dollar"></i>
+                                    </td>
+                                    <td id="studentFeeHistoryBalanceValue" colspan="4" class="text-right" style="font-weight: bolder;color: black; text-decoration: underline;">
+                                    45001-11</td>
+                    
+                                </tr>
+                            </tbody>
+                    
+                        </table>
+                    
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" id="invoiceContent" style="display:none;">
                 <div class="col-md-12 invoice-v1-header">
                     <div class="col-md-12">
                         <h1>
@@ -52,8 +147,8 @@
                         <h4>
                             <address>
                                 <strong>Invoice #: 123</strong>
-                                <br> Created: July 28, 2014
-                                <br> Due: July 28, 2015
+                                <br> Created: <label id="invoiceIssueDate">July 28, 2014</label>
+                               <!--  <br> Due: July 28, 2015 -->
                                 <br>
                             </address>
                         </h4>
@@ -63,20 +158,21 @@
                     <div class="col-md-6">
                         <h4>
                             <address>
-                                <strong>Miminium, Inc.</strong>
-                                <br> 1234 Mimin Street, Suite 900
-                                <br> Miminium City, CA 94103
+                                <strong id="invoiceSchoolName">Miminium, Inc.</strong>
+                                <br> <label id="invoiceschoolAddress">1234 Mimin Street, Suite 900</label>
+                                
                                 <br>
-                                <abbr title="Phone">P:</abbr> (123) 456-7890
+                                <abbr title="Phone">P:</abbr> <label id="invoiceSchoolContacts">(263) 456-7890</label>
                             </address>
                         </h4>
                     </div>
                     <div class="col-md-6 text-right">
                         <h4>
-                            <address>
-                                <strong>AlfaMiminium Corp</strong>
-                                <br> Akihiko Avaron
-                                <br> akihiko.avaron@gmail.com
+                            <address>                              
+                                <strong>Invoice To</strong>
+                                <br> <label id="toWhoName" >PersonName or student Name</label>
+                                <br> <label id="toContantsEmail">akihiko.avaron@gmail.com</label>
+                                <br> <label id="toContantsPhoneNumber">007 333 333</label>
                                 <br>
                             </address>
                         </h4>
@@ -86,34 +182,40 @@
                     <div class="responsive-table">
 
                         <table class="table table-striped">
-                            <tr>
-                                <th>Item</th>
-                                <th>Qty</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                            </tr>
-                            <tr>
-                                <td>Jquery Plugin</td>
-                                <td>---</td>
-                                <td>---</td>
-                                <td>---</td>
-                            </tr>
-                            <tr>
-                                <td>Javascript Linter</td>
-                                <td>---</td>
-                                <td>---</td>
-                                <td>---</td>
-                            </tr>
-                            <tr>
-                                <td>Mobile Designer</td>
-                                <td>---</td>
-                                <td>---</td>
-                                <td>---</td>
-                            </tr>
-                            <tr>
-                                <th colspan="3">Total</th>
-                                <td>----</td>
-                            </tr>
+                           <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                           </thead>
+                            <tbody id="invoiceDeatilsTable">
+                                <tr>
+                                    <td>JQuery Plugin</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                </tr>
+                                <tr>
+                                    <td>JavaScript Linter</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile Designer</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                    <td>---</td>
+                                </tr>
+                            </tbody>
+                           <tbody>
+                                <tr>
+                                    <th colspan="3">Total</th>
+                                    <td>----</td>
+                                </tr>
+                           </tbody>
                         </table>
                     </div>
                 </div>
@@ -122,9 +224,15 @@
         <!-- end: content -->
     </div>
 
-    <!-- start: Javascript -->
-    <script src="../public/js/frameworks/jquery.min.js"></script>
-    <script src="../public/js/frameworks/jquery.ui.min.js"></script>
+    <!-- start: JavaScript -->
+    <script>
+        if (typeof module === 'object') {
+            window.module = module;
+            module = undefined;
+        }
+    </script>
+    <script type="text/javascript" src="../public/js/frameworks/jquery.js"></script>
+<script type="text/javascript" src="../public/js/frameworks/jquery-ui.min.js"></script>
     <script src="../public/js/frameworks/bootstrap.min.js"></script>
 
 
@@ -135,9 +243,13 @@
 
     <!-- custom -->
     <script src="../public/js/frameworks/main.js"></script>
-    <script type="text/javascript">
+    <script src="../public/js/customes/MainQuery.js"></script>
+   <script src="../public/js/customes/invoice.js"></script>
+   
+    <!-- end: JavaScript -->
+    <script>
+        if (window.module) module = window.module;
     </script>
-    <!-- end: Javascript -->
 </body>
 
 </html>

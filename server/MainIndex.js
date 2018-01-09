@@ -13,6 +13,7 @@ const os = require("os");
 
 let win = null;
 let workerWindow =null;
+let printInvoiceWindow =null;
 const windowWidth = 1500;
 const windowHeight = 800;
 
@@ -41,7 +42,7 @@ function onCreateWindow () {
 
 		);
 		//
-    workerWindow = new BrowserWindow();
+    /* workerWindow = new BrowserWindow();
     workerWindow.hide();
 		workerWindow.loadURL(url.format({
         pathname: path.join(__dirname, "../views", "worker.html"),
@@ -56,8 +57,10 @@ function onCreateWindow () {
    // workerWindow.webContents.openDevTools();
     workerWindow.on("closed", () => {
       workerWindow = undefined;
-    });
-		//
+    }); */
+    //
+     
+    //
 		elemon({
 			app: app,
 			mainFile: 'MainIndex.js',
@@ -67,6 +70,34 @@ function onCreateWindow () {
 		});
 
 		let server = require('./requestsExpress.js');
+} // "../views/","invoicePrint.html"
+function createInvoicePrintWindow() {
+  // create a child window to process printing
+ 
+  printInvoiceWindow = new BrowserWindow({
+    parent: win,
+    width: 900 - 70,
+    height: 720,
+    titleBarStyle: "hiddenInset"
+    /*  frame: false */
+  });
+  printInvoiceWindow.setTitle("Printing Window");
+  printInvoiceWindow.on("close", function() {
+    printInvoiceWindow = null;
+  });
+  printInvoiceWindow.loadURL(url.format({
+      pathname: path.join(__dirname, "../views", "invoicePrint.html"),
+      protocol: "file:",
+      slashes: true,
+      titleBarStyle: "hidden",
+      frame: false
+    }));
+    printInvoiceWindow.setMenu(null);
+    printInvoiceWindow.setMinimizable(false);
+    printInvoiceWindow.center();
+    printInvoiceWindow.show();
+    win.show();
+  printInvoiceWindow.show();
 }
 ipcMain.on("printPDF111", (event, content) => {
 	
@@ -98,13 +129,34 @@ ipcMain.on("readyToPrintPDF", (event) => {
         if (error) throw error
         fs.writeFile(pdfPath, data, function (error) {
             if (error) {
-                throw error
+                throw error;
             }
             shell.openItem(pdfPath)
             event.sender.send('wrote-pdf', pdfPath)
-        })
-    })
+        });
+    });
 });
+/****************************************************************************************************/
+ipcMain.on("openInvoiceWindow", (event, content) => {
+  createInvoicePrintWindow();
+  printInvoiceWindow.webContents.send("invoiceData", content);
+});
+ipcMain.on("invoiceReady",(ev)=>{
+  
+  const pdfPath = path.join(os.tmpdir(), "print.pdf");
+  printInvoiceWindow.webContents.printToPDF({},function (err , data) {
+      fs.writeFile(pdfPath , data , function(err){
+        if (err) {
+          throw err;
+        } else {
+         
+          shell.openItem(pdfPath);
+          ev.sender.send("wrote-pdf", pdfPath);
+        }
+      });
+  });
+});
+/****************************************************************************************************/
 /****************************************************************************************************/
 function onExitWindow () {
 	win = null ;
