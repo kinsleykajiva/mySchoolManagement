@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../public/css/font-awesome.css" />
     <link rel="stylesheet" href="../public/css/simple-line-icons.css" />
     <link rel="stylesheet" href="../public/css/animate.min.css" />
+    <link rel="stylesheet" type="text/css" href="../public/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../public/css/jquery.toast.css" />
     <link href="../public/css/style.css" rel="stylesheet">
     <link href="../public/css/customes/index.css" rel="stylesheet">
@@ -185,9 +186,15 @@
                                         <hr>                                      
                                            
                                             <div>
+                                                <button id="studentHistoryFeeHistory"  class="btn btn-round btn-info">
+                                                    <i class="fa fa-print fa"></i> Print
+                                                </button>
                                                 <button id="btnfindStudentFeeSearch" class="btn btn-round btn-info">
                                                     <i class="fa fa-search"></i> Find
-                                                </button>                                          
+                                                </button>   
+                                                <button id="btnmakePayment" class="btn btn-round btn-secondary" style="display: none ; float: right;">
+                                                    <i class="fa fa-credit-card"></i> Make Payment
+                                                </button>                                         
                                             </div>
                                            
                                             <br>
@@ -283,11 +290,15 @@
                                                 </button> 
                                               </div>
                                           </div>   
+                                        <div>
+                                            <button id="studentHistoryFeeHistory" style="display:none;" class="btn btn-round btn-info">
+                                                <i class="fa fa-print fa"></i> Print
+                                            </button>
+                                        </div>
                                              <center id="loadingstudentFeeHistory" style ="display: none;">
                                                     <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
                                                     <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
-                                                     <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">
-                                                    
+                                                     <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">                                                    
                                                      <img style="margin:  10px 20px;" id="viewStudentsSpinner" src="../public/images/spinner.gif">                                                    
                                                 </center>
                                             <hr>
@@ -330,6 +341,7 @@
                                                         </tbody>
 
                                                     </table>
+                                                   
                                                     
                                                 </div>
                                             </div>   
@@ -345,13 +357,24 @@
                         <div class="col-md-12 typography padding-0">
                             <div class="row">
                                 <div class="col-md-8">
-                                     <div id="showmakePaymentDiv" class="panel">
+                                     <div id="showmakePaymentDiv" style="display: none;" class="panel">
                             <div class="panel-heading btn-info">
-                                <h4>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <h4>
                                     <strong>
                                         Payment Details.
                                     </strong>
                                 </h4>
+                                    </div>
+                                    <div class="col-md-2">
+                                        
+                                                <button data-toggle="tooltip" data-placement="top" title="Close" class="btn btn-round btn-warning" onClick="close_DivFees()" > 
+                                                    <i class="fa fa-close"></i>
+                                                </button> 
+                                                 
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="panel-body">
@@ -390,20 +413,20 @@
 
                                     <div class="col-md-6">
 
-                                     <div class="input-group">
+                                       <div class="input-group">
                                         <label>Payment Method&nbsp;&nbsp;&nbsp;</label>
-                                       <select onchange="onChangeBank()"  class="form-group" id="paymentMethodPay">
+                                        <select onchange="onChangeBank()"  class="form-group" id="paymentMethodPay">
                                            <option value="null">Choose..</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Mobile">Mobile Transfer</option>
-                                        <option value="TransFeer">Bank Transfer</option>
-                                        <optgroup label="Mobile">
+                                           <option value="Cash">Cash</option>
+                                           <option value="Mobile">Mobile Transfer</option>
+                                           <option value="TransFeer">Bank Transfer</option>
+                                           <optgroup label="Mobile">
                                             <option value="EcoCash">EcoCash</option>
                                             <option value="TeleCash">TeleCash</option>
                                             <option value="NetCash">NetCash</option>
                                         </optgroup>
-                                       </select>
-                                    </div>                                   
+                                    </select>
+                                </div>                                   
 
                                     </div>
                                     

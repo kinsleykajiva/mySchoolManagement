@@ -138,7 +138,7 @@ app.get('/getClassDetails' , function (req , res) {
 	SysAccessDB.getClassDetails().then(function  (response) {		
 		res.json(response);
 	}).catch(function (err) {
-		console.log(err)
+		console.log(err);
 		console.log("An error during getClassDetails()");
 	});
 
@@ -149,7 +149,7 @@ app.post('/saveFeeType' , function (req , res) {
 	feeDB.creatFeeType( req.body.feee , req.body.descriptionType).then(function  (response) {		
 		res.json(response);
 	}).catch(function ( err) {
-		console.log(err)
+		console.log(err);
 		console.log("An error during saveFeeType()");
 	});
 
@@ -160,7 +160,7 @@ app.get('/getFeeType' , function (req , res) {
 	feeDB.getFeeTypes().then(function  (response) {		
 		res.json(response);
 	}).catch(function (err) {
-		console.log(err)
+		console.log(err);
 		console.log("An error during getFeeType()");
 	});
 
@@ -173,7 +173,7 @@ app.post('/saveNewFee' , function (req , res) {
 	.then(function  (response) {		
 		res.json(response);
 	}).catch(function ( err) {
-		console.log(err)
+		console.log(err);
 		console.log("An error during saveNewFee()");
 	});
 
@@ -184,31 +184,49 @@ app.get('/getFees' , function (req , res) {
 	feePayment.getFees().then(function  (response) {		
 		res.json(response);
 	}).catch(function (err) {
-		console.log(err)
+		console.log(err);
 		console.log("An error during getFees()");
 	});
 
 });
 /*------------------------------------------------------------------------------------------------*/
-app.get('/getOneStudentFees' , function (req , res) {
+app.post('/getOneStudentFees' , function (req , res) {
+
+	let clasLevel = req.body.clasLevel_search;
 	
-	feePayment.getStudentPayments(req.body.reg_num).then(function  (response) {		
+	//get amount paid by students at this level
+	feeDB.getFeesAmountsforgradeLevel( clasLevel ).then(function (amountToBePaid) {
+		
+		//get all the amounts and add them all up	
+		return feePayment.getStudentPayments(amountToBePaid , req.body.reg_num);
+
+	}).then(function (response) {		
+		
 		res.json(response);
 	}).catch(function (err) {
-		console.log(err)
-		console.log("An error during getOneStudentFees()");
+		console.log(err);
+		console.log("An error during getFeesAmountsforgradeLevel()");
 	});
+	
+	/*feePayment.getStudentPayments(req.body.reg_num).then(function  (response) {		
+		res.json(response);
+	}).catch(function (err) {
+		console.log(err);
+		console.log("An error during getOneStudentFees()");
+	});*/
 
 });
 /*------------------------------------------------------------------------------------------------*/
 app.post('/payFees' , function (req , res) {
 	
-	feePayment.payFees( req.body.amountPay , req.body.studentRegNumberPay ,req.body.paymentMethodPay , 
-		req.body.bankPay , req.body.accountNoPay  , req.body.commentPay  , req.body.receptNumberPay )
+	feePayment.payFees( 
+req.body.receptNumberPay , req.body.amountPay , req.body.studentRegNumberPay , req.body.paymentMethodPay,
+req.body.bankPay  ,  req.body.accountNoPay ,  req.body.commentPay
+		 )
 	.then(function  (response) {		
 		res.json(response);
 	}).catch(function ( err) {
-		console.log(err)
+		console.log(err);
 		console.log("An error during payFees()");
 	});
 

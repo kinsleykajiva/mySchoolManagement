@@ -19,6 +19,7 @@
     "body-parser": "^1.18.2",
     "couchdb": "^0.3.8",
     "electron": "^1.7.10",
+    "electron-html-to": "^2.6.0",
     "electron-json-storage": "^4.0.2",
     "electron-process-manager": "^0.1.0",
     "electron-reload": "^1.2.2",

@@ -2,16 +2,34 @@
 /*********************************************************************************************/
 var lastSearchRegNumber= '';
 var lastNameSuName='';
-
+var clasLevel_search = '';
+const ipcRenderer = require("electron").ipcRenderer;
 /*********************************************************************************************/
 
 /*********************************************************************************************/
-
+function sendCommandToWorker(content) {
+  ipcRenderer.send("printPDF", content);
+}
 /*********************************************************************************************/
-/*********************************************************************************************/
+$("#studentHistoryFeeHistory").click(function(){
+	
+	showSuccessMessage("Starting Print",4000);
+	 sendCommandToWorker($("#StudentFeesHistorytableListResults").html());
+	 //alert("" + $("#StudentFeesHistorytableListResults").html());
 
+});
 /*********************************************************************************************/
+function close_DivFees (argument) {
+	$("#showmakePaymentDiv").slideUp('slow');
+}
+/*********************************************************************************************/
+$("#btnmakePayment").click(function () {
+	$("#showmakePaymentDiv").slideDown('slow');
+	$("html, body").animate({
+		scrollTop: (242)
+	}, "slow");
 
+});
 /*********************************************************************************************/
 function onChangeBank () {
 	let paymentMethodPay= $("#paymentMethodPay").val();
@@ -84,6 +102,8 @@ function saveFeesPayment ( studentRegNumberPay  ,amountPay , paymentMethodPay , 
 			$("#bankPay").val('') ;
 			$("#accountNoPay").val('') ;
 			$("#commentPay").val('') ;
+			$("#receptNumberPay").val(receiptNumber());
+			getstudentFeeHistory (lastSearchRegNumber);
 		}
 	}).fail(function (err) {
 		loadingScreen(false , "Saving...");
@@ -93,10 +113,8 @@ function saveFeesPayment ( studentRegNumberPay  ,amountPay , paymentMethodPay , 
 /*********************************************************************************************/
 
 /*********************************************************************************************/
-/*********************************************************************************************/
-$('#btnfindStudentFeeSearch').click(function () {
-	// get student
-  let regNum = $('#searchRegNumber').val().trim()
+function btnfindStudentFeeSearch () {
+	let regNum = $('#searchRegNumber').val().trim()
   let nameSurname = $('#searchNameSurname').val().trim()
 
   if (regNum == '' && nameSurname == '') {
@@ -127,7 +145,7 @@ $('#btnfindStudentFeeSearch').click(function () {
         let tr = '<tr>' +
 									'<td> ' + item.reg_num + '</td>' +
 									'<td> ' + item.inputFirstname + ' ' + item.inputSurname + '</td>' +
-									"<td> <a style='cursor:pointer;' id='" + item.reg_num + "' dt = '" + item.inputFirstname + ' ' + item.inputSurname + "' onclick ='viewSearchSelect(this);'  > Select</a> </td>" +
+									"<td> <a style='cursor:pointer;' xclasLevel_search='"+item.inputClassLevel+"' id='" + item.reg_num + "' dt = '" + item.inputFirstname + ' ' + item.inputSurname + "' onclick ='viewSearchSelect(this);'  > Select</a> </td>" +
 							'</tr>'
         tbody.append(tr)
       })
@@ -135,7 +153,12 @@ $('#btnfindStudentFeeSearch').click(function () {
       $('#loadingstudentSearch').slideUp('fast')
     }
   })
-})
+}
+/*********************************************************************************************/
+$('#btnfindStudentFeeSearch').click(function () {
+	// get student
+  btnfindStudentFeeSearch () ;
+});
 
 /*********************************************************************************************/
 function moveAnimate (element, newParent) {
@@ -192,6 +215,7 @@ function animove () {
 
 function viewSearchSelect (object) {
 	let id_ = $(object).attr('id');
+	clasLevel_search =  $(object).attr('xclasLevel_search');
 	$('#searchRegNumber').val(id_);
 	$('#studentRegNumberPay').val(id_);
 	$("#receptNumberPay").val(receiptNumber());
@@ -236,19 +260,18 @@ function minimise_DiviewStudentDatadiv () {
     $('#btnmaximise_DiviewStudentDatadiv').slideDown('fast')
     moveAnimate('#btnmaximise_DiviewStudentDatadiv', '#destinationMinimisedDiv');
   });
-  if(lastSearchRegNumber !=''){
+  if(lastSearchRegNumber !='' && $("#studentFeesHistoryDiv").is(":visible") ){
   	//sho the payment history
   	setTimeout(function () {
   		$("#studentFeesHistoryDiv").slideDown('fast');
   		getstudentFeeHistory(lastSearchRegNumber);
   	},1500);
-  }
-	// hide( "drop", { direction: "down" }, "slow" );
+  }	
 }
 /*********************************************************************************************/
 
 function close_DiviewStudentDatadiv () {
-  $('#viewStudentDatadiv').slideUp('slow')
+	$('#viewStudentDatadiv').slideUp('slow');
 }
 
 /*********************************************************************************************/
@@ -263,14 +286,22 @@ function getstudentFeeHistory (reg_num) {
 		$('#StudentFeesHistorytableListResults').slideUp('fast');
 		$("#StudentFeesHistoryshowingTable").slideUp('fast');
 		$("#refresh_DiviewStudentFeesHistorydiv").slideUp('fast').text(reg_num);
+		$("#studentFeeHistoryBalance").slideUp("fast");
+		$("#studentHistoryFeeHistory").hide("fast");
 
-		$.get("http://localhost:3500/getOneStudentFees" , {
-			reg_num:reg_num
+		$.post("http://localhost:3500/getOneStudentFees" , {
+			reg_num:reg_num , 
+			clasLevel_search:clasLevel_search
 		}).done(function (response) {
-			$('#loadingstudentFeeHistory').slideUp('fast');
+			//console.log(response);
+			//console.log(response.amt);
+			//console.log(response.j);
+
+			$('#loadingstudentFeeHistory').slideUp('fast');		
+			$("#studentHistoryFeeHistory").slideDown('slow');
 			if( response.length == 0 ){
 				$('#status_studentTableHistory').text('Student has Paid Nothing so far  !').css('color', 'red');
-				//$("#minimise_DiviewStudentFeesHistorydiv").attr('disabled' , true);
+				$("#minimise_DiviewStudentFeesHistorydiv").attr('disabled' , true);
 				showWarningMessage('Student has Paid Nothing so far ', 3000);
 				$('#StudentFeesHistorytableListResults').slideUp('fast');
 			}else{
@@ -279,13 +310,34 @@ function getstudentFeeHistory (reg_num) {
 				$('#status_studentTableHistory').text('Student Payment History').css('color', 'black');
 				$('#StudentFeesHistorytableListResults').slideDown('fast');
 				$('#studentFeeHistoryTotal').slideDown('fast');
+				$("#btnmakePayment").slideDown('slow');
+
+				let total = 0;
+				let balance = 0;
+				response.j.forEach(function (item) {
+					total +=parseInt(item.amount);
+					
+					let tr = "<tr>"+
+								"<td>"+ getDateConvertion(item.date_)+ "</td>"+
+								"<td>"+ item.amount+ "</td>"+
+								"<td>"+ item.payment_method+ "</td>"+
+								"<td>"+ item.receipt+ "</td>"+
+								"<td> <a style='cursor:pointer;color:blue;text-decoration:underline;' xid='"+ item.student_paying+ "'>View</a></td>"+
+							"</tr>";
+					tbody.append(tr);
+				});
+				balance = parseInt(response.amt) - total ;
+				$("#studentFeeHistoryBalance").slideDown("fast");
+				$("#studentFeeHistoryBalanceValue").text(balance);
+				$("#studentFeeHistoryTotalValue").text(total);
 
 			}
 		}).fail(function (err) {
+			$("#studentHistoryFeeHistory").hide("fast");
 			$("#minimise_DiviewStudentFeesHistorydiv").attr('disabled' , true);
 			$("#refresh_DiviewStudentFeesHistorydiv").slideDown('fast');
 			$('#loadingstudentFeeHistory').slideUp('fast');
-			$('#status_studentTableHistory').text('Error Occured ,Press Re-Load  !').css('color', 'red');
+			$('#status_studentTableHistory').text('An Error Occured ,Press Re-Load  !').css('color', 'red');
 			showErrorMessage('Error Occured ', 3000);			
 			$('#StudentFeesHistorytableListResults').slideUp('fast');
 		});
@@ -307,7 +359,7 @@ function maximise_DiviewStudentFeesHistorydiv () {
 		$('#btnmaximise_DiviewStudentFeesHistorydiv').slideUp('fast');
 		
 		moveAnimateReturn('#btnmaximise_DiviewStudentFeesHistorydiv', '#killFeeshistory');
-if ($("#viewStudentDatadiv").is(":visible")) {
+		if ($("#viewStudentDatadiv").is(":visible")) {
 			setTimeout(()=>{				
 				$("#studentFeesHistoryDiv").slideDown('fast');
 			},1500);
@@ -315,7 +367,7 @@ if ($("#viewStudentDatadiv").is(":visible")) {
 			
 		}
 
-	})
+	});
 	
 }
 /*********************************************************************************************/

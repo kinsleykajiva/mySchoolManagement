@@ -105,8 +105,47 @@ module.exports.createFee = function (name , amount , whose_paying , fee_type , b
 }
 /*-------------------------------------------------------------------------------------------------------*/
 
-module.exports.updateFee = function (id ) {
-	/* body... */
+module.exports.getFeesAmountsforgradeLevel = function (gradesLevel ) {
+	return new Promise ( function (resolve , reject) {
+		db.find({},function (err , docs) {
+				if(!err){
+					let retString = ""; // {"amount":23 , ""}
+					let TotalAmount = 0;
+					docs.forEach(function (item) {
+						
+						if (typeof item.whose_paying !== "undefined") {
+
+							if( item.whose_paying == 'all' ){
+								
+								TotalAmount += parseInt(item.amount);
+							}
+
+							if( item.whose_paying == gradesLevel ){
+
+								TotalAmount += parseInt(item.amount);
+							}
+
+							if( item.whose_paying.includes("-") ){
+
+								let min = parseInt(item.whose_paying.split("-")[0]);
+								let max = parseInt(item.whose_paying.split("-")[1]);
+
+							// check if graddeLevel is within a range of the fees was set to
+
+							if ( gradesLevel >= min && gradesLevel <= max ) {
+
+								TotalAmount += parseInt(item.amount);
+							}
+						}
+					}
+					});
+					resolve(TotalAmount);
+
+				}else{
+					reject(err);
+				}
+			});
+	});
 };
 /*-------------------------------------------------------------------------------------------------------*/
 module.exports.deleteFee = function (id ) {

@@ -1,0 +1,21 @@
+<head> </head>
+<!-- start: Css -->
+<link rel="stylesheet" type="text/css" href="../public/css/bootstrap.min.css">
+<!-- plugins -->
+<link rel="stylesheet" href="../public/css/font-awesome.css" />
+<link rel="stylesheet" href="../public/css/simple-line-icons.css" />
+<link rel="stylesheet" href="../public/css/animate.min.css" />
+<link rel="stylesheet" href="../public/css/jquery.toast.css" />
+<link href="../public/css/style.css" rel="stylesheet">
+<link href="../public/css/customes/index.css" rel="stylesheet">
+<body>
+    <script>
+        const ipcRenderer = require("electron").ipcRenderer;
+
+        ipcRenderer.on("printPDF", (event, content) => {
+            document.body.innerHTML = content;
+
+            ipcRenderer.send("readyToPrintPDF");
+        });
+    </script>
+</body>
