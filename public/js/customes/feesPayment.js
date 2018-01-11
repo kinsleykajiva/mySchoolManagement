@@ -1,4 +1,6 @@
-
+ $(document).ready(function() {
+   $(".bestupper").bestupper();
+ });
 /*********************************************************************************************/
 var lastSearchRegNumber= '';
 var lastNameSuName='';
@@ -29,6 +31,15 @@ $("#btnmakePayment").click(function () {
 		scrollTop: (242)
 	}, "slow");
 
+});
+/*********************************************************************************************/
+$("#resetPay").click(function () {
+	$("#commentPay").val("");
+	$("#accountNoPay").val("");
+	$("#bankPay").val("");
+	$("#paymentMethodPay").val("null");
+	$("#amountPay").val("");
+	
 });
 /*********************************************************************************************/
 function onChangeBank () {

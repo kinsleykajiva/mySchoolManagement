@@ -3,13 +3,8 @@ const { app, BrowserWindow, ipcMain, shell } = require("electron");
 const url = require('url');
 const path = require('path');
 const elemon = require('elemon');
-
-
 const fs = require("fs");
 const os = require("os");
-
-//var ipc = require('ipc');
-
 
 let win = null;
 let workerWindow =null;
@@ -40,24 +35,11 @@ function onCreateWindow () {
 					frame: false
 				})
 
-		);
-		//
-    /* workerWindow = new BrowserWindow();
-    workerWindow.hide();
-		workerWindow.loadURL(url.format({
-        pathname: path.join(__dirname, "../views", "worker.html"),
-        protocol: "file:",
-        slashes: true,
-        titleBarStyle: "hidden",
-        frame: false
-      })
     );
-    
-     
-   // workerWindow.webContents.openDevTools();
-    workerWindow.on("closed", () => {
-      workerWindow = undefined;
-    }); */
+    createInvoicePrintWindow();
+    createWorkerWindow();
+		//
+    /* */
     //
      
     //
@@ -83,7 +65,7 @@ function createInvoicePrintWindow() {
   });
   printInvoiceWindow.setTitle("Printing Window");
   printInvoiceWindow.on("close", function() {
-    printInvoiceWindow = null;
+    createInvoicePrintWindow();
   });
   printInvoiceWindow.loadURL(url.format({
       pathname: path.join(__dirname, "../views", "invoicePrint.html"),
@@ -92,12 +74,30 @@ function createInvoicePrintWindow() {
       titleBarStyle: "hidden",
       frame: false
     }));
-    printInvoiceWindow.setMenu(null);
+    //printInvoiceWindow.setMenu(null);
     printInvoiceWindow.setMinimizable(false);
-    printInvoiceWindow.center();
-    printInvoiceWindow.show();
-    win.show();
-  printInvoiceWindow.show();
+    printInvoiceWindow.center();    
+     printInvoiceWindow.hide();
+    
+}
+/**
+ * Create a background window to handel other form of printings
+ * **/
+function createWorkerWindow() {
+   workerWindow = new BrowserWindow({show: false});
+   workerWindow.hide();
+   workerWindow.loadURL(url.format({
+       pathname: path.join(__dirname, "../views", "worker.html"),
+       protocol: "file:",
+       slashes: true,
+       titleBarStyle: "hidden",
+       frame: false
+     }));
+
+   // workerWindow.webContents.openDevTools();
+   workerWindow.on("closed", () => {
+     workerWindow = undefined;
+   });
 }
 ipcMain.on("printPDF111", (event, content) => {
 	
@@ -138,7 +138,9 @@ ipcMain.on("readyToPrintPDF", (event) => {
 });
 /****************************************************************************************************/
 ipcMain.on("openInvoiceWindow", (event, content) => {
-  createInvoicePrintWindow();
+  
+  win.show();
+  printInvoiceWindow.show();
   printInvoiceWindow.webContents.send("invoiceData", content);
 });
 ipcMain.on("invoiceReady",(ev)=>{
@@ -148,8 +150,7 @@ ipcMain.on("invoiceReady",(ev)=>{
       fs.writeFile(pdfPath , data , function(err){
         if (err) {
           throw err;
-        } else {
-         
+        } else {         
           shell.openItem(pdfPath);
           ev.sender.send("wrote-pdf", pdfPath);
         }
@@ -176,7 +177,11 @@ function onExitWindow () {
 // create window
 app.on('ready' , onCreateWindow );
 // kills process the necessary windows are closed
-app.on('closed' , onExitWindow);
+
+app.on('closed' ,  (ev)=> {
+  printInvoiceWindow = null;
+  onExitWindow();
+});
 
 
 

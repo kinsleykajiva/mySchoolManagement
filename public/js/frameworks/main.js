@@ -332,7 +332,7 @@
 
     $("body").tooltip({ selector: '[data-toggle=tooltip]' });
     leftMenu();
-    rightMenu();
+   //rightMenu();
     treeMenu();
     hide();
 })(jQuery);

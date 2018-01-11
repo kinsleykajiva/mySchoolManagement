@@ -5,7 +5,7 @@ const ipcRenderer = require("electron").ipcRenderer;
 
 /*********************************************************************************************/
 /*********************************************************************************************/
-$('td:nth-child(5),th:nth-child(5)').hide();
+
 
 /*********************************************************************************************/
 function onloadData() {
@@ -27,24 +27,42 @@ function onloadData() {
 //onloadData();
 /*********************************************************************************************/
 function printPage() {
-  //$("#containerNav").slideUp(460);
- /*  $("#statusIcon")
-    .toggleClass("fa fa-spinner fa-pulse fa-1x fa-fw")    
-    .addClass("fa-pulse")
-    .toggleClass("fa fa-check-circle fa-pulse fa-1x fa-fw")
-    .removeClass("fa-pulse")   
-    .append(" ");
-    $("#readyStatus")
-      .text(" Ready")
-      .fadeIn(2000); */
- ipcRenderer.send("invoiceReady");
+  // Hide the print bar menu
+  $("#containerNav").slideUp('fast');
+  // making a delay to hide the print menu bar so that when the print command get initiated
+  // the window has removed the unwanted print bar
+  setTimeout(() => {
+    ipcRenderer.send("invoiceReady");
+    setTimeout(() => {
+      $("#containerNav").slideDown('fast');
+    }, 2000);
+  }, 1500);
+ 
 
 }
+// 
 /*********************************************************************************************/
 ipcRenderer.on("invoiceData", (event, content) => {
- $("#otherTableContentContainer").html(content);
+ 
 
+  $("#otherTableContentContainer").html(content);
+  $("td:nth-child(5),th:nth-child(5)").hide();// this will hide the fifth column of the table
   
+  setTimeout(() => {
+    $("#statusIcon")
+      .toggleClass("fa fa-spinner fa-pulse fa-1x fa-fw")
+      .addClass("fa-pulse")
+      .toggleClass("fa fa-check-circle fa-pulse fa-1x fa-fw")
+      .removeClass("fa-pulse")
+      .append(" ");
+
+      $("#readyStatus")
+        .text(" Ready");
+
+        $("#btnprintPage").attr("disabled" , false);
+
+  }, 2500);
+  // alert(content);
 });
 /*********************************************************************************************/
 

@@ -1,6 +1,6 @@
 const nav_links = document.querySelectorAll('link[rel="import"]');
 
-var lastClikedNAv = "nav_home";
+var lastClickedNAv = "";
 
 var shouldLoadView = true;
 const notificationsShowwTime = 7500;
@@ -23,7 +23,84 @@ const notificationsShowwTime = 7500;
 
 
 /*********************************************************************************************/
+function thisNav (navObject) {
+	const nav = $(navObject).attr('id');
+	const contentHolder = $("#content");
+	
+	let template= null;
+	let  clone = null;
+	//console.log(nav_links);;
+	switch (nav) {
+	case "nav_newStudent":
+	if (lastClickedNAv == nav) {
+		return ;
+	}
+	 template = nav_links[0].import.querySelector(".task-template");
+      clone = document.importNode(template.content, true);
 
+      contentHolder
+        .empty()
+        .delay(500)
+		.append(clone);
+		lastClickedNAv = nav;	
+
+      break;
+	case "nav_viewStudent":
+	if (lastClickedNAv == nav) {
+		return;
+	}
+      template = nav_links[1].import.querySelector(".task-template");
+      clone = document.importNode(template.content, true);
+
+      contentHolder
+        .empty()
+        .delay(500)
+        .append(clone);
+		lastClickedNAv = nav;	
+      break;
+	case "nav_settings":
+	if (lastClickedNAv == nav) {
+		return;
+	}
+      template = nav_links[2].import.querySelector(".task-template");
+      clone = document.importNode(template.content, true);
+
+      contentHolder
+        .empty()
+        .delay(500)
+        .append(clone);
+		lastClickedNAv = nav;	
+      break;
+	case "nav_createFees":
+	if (lastClickedNAv == nav) {
+		return;
+	}
+      template = nav_links[3].import.querySelector(".task-template");
+      clone = document.importNode(template.content, true);
+
+      contentHolder
+        .empty()
+        .delay(500)
+        .append(clone);
+
+      break;
+	case "nav_studentPayFees":
+	if (lastClickedNAv == nav) {
+		return;
+	}
+      template = nav_links[4].import.querySelector(".task-template");
+      clone = document.importNode(template.content, true);
+
+      contentHolder
+        .empty()
+        .delay(500)
+		.append(clone);
+
+		lastClickedNAv = nav;	
+
+      break;
+  }
+}
 /*********************************************************************************************/
 
 /*********************************************************************************************/
@@ -68,6 +145,10 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
 /*********************************************************************************************/
+/**
+ * Creates a random receipt Number between min and max (both included)
+ * @return     {<String>}  random receipt Number.
+ */
 function receiptNumber () {
 	
 	let ret = "";
@@ -82,17 +163,33 @@ function receiptNumber () {
 	return ret;
 }
 /*********************************************************************************************/
+/**
+ * Converts a Turkish Z-Date format to  date form MM/DD/YYYY
+ * @param	   {String} zDate	The date to be converted
+ * @return     {String}  Date String.
+ */
 function dateConvertor (zDate) {
-	let  mydate = new Date(zDate);
-	return (mydate.toDateString());
+	
+	return new Date(zDate).toDateString();
 }
 /*********************************************************************************************/
+/**
+ * Converts a Turkish Z-Date format to  date form MM/DD/YYYY
+ * @param	   {String} zDate	The date to be converted
+ * @return     {String}  Date String.
+ */
 function getDateConvertion(zdate){
 	let date = new Date(zdate);
 	return  ((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
 }
 
 /*********************************************************************************************/
+/**
+ * This is a method override of the default JS replaceAll method to replace {search} occurrences
+ * @param	   {String} search	The date to be converted
+ * @param	   {String} replace	The date to be converted
+ * @return     {String}  String.
+ */
 String.prototype.replaceAll2 = function(search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
@@ -100,6 +197,12 @@ String.prototype.replaceAll2 = function(search, replacement) {
 
 
 /*********************************************************************************************/
+/**
+ * This creates an array of numbers with in a given range
+ * @param	   {Number} start	start from 
+ * @param	   {Number} end		stop at
+ * @return     {Integer Array}  .
+ */
 function rangeArray(start, end) {
 	let myArray = [];
 	for (let i = start; i <= end; i += 1) {
@@ -113,13 +216,18 @@ function resizeWindow(){
 }
 
 /*********************************************************************************************/
+/**
+ * This shows a pop up dialog box that ask and returns decisions
+ * @return     {Boolean}  true or false.
+ */
 function makeSureOfExit(){
     $(document).unload(function(){
-        if(confirm('Are you sure you want to exit?')){
-             return true;
-        }
+        // if(confirm('Are you sure you want to exit?')){
+        //      return true;
+        // }
 
-        return false;
+		// return false;
+		return confirm("Are you sure you want to exit?");
     });
 }
 
@@ -256,9 +364,9 @@ function _txt(obj ,txt) {
    $("#" + obj).text(txt);
 }
 /* ------------------------------------------------------------------------------------------ */
-/*  This seeks to remove the long text of selectors in JQuery .Sets the value to html object
-* @obj - html object ID
-* @val - val to set to the object passed
+/*This seeks to remove the long text of selectors in JQuery .Sets the value to html object
+*@param    obj - html object ID
+*@param	 val - val to set to the object passed
 */
 function _vv(obj,val) {
    $("#" + obj).val(val);
