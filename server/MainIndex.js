@@ -23,7 +23,10 @@ function onCreateWindow () {
 		win = new BrowserWindow({
 			width: windowWidth ,
 			height:windowHeight,
-			title: 'Private School Management'
+      title: 'Private School Management',
+      backgroundColor: '#312450',
+      titleBarStyle: 'hidden',
+    icon: path.join(__dirname, '../public/images/assets/128/logo.png')
 		});
 		//win.setMenu(null);
 		win.loadURL(
@@ -60,7 +63,9 @@ function createInvoicePrintWindow() {
     parent: win,
     width: 900 - 70,
     height: 720,
-    titleBarStyle: "hiddenInset"
+     titleBarStyle: 'hidden',
+    icon: path.join(__dirname, '../public/images/assets/128/logo.png')
+    
     /*  frame: false */
   });
   printInvoiceWindow.setTitle("Printing Window");

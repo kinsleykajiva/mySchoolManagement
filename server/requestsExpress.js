@@ -4,13 +4,14 @@
  *
  */
 
-let express = require('express');
-let app = express();
-var bodyParser = require("body-parser");
-let studentDB = require('./DBAccess/Local/Nedb/DBstudentAccess');
-let SysAccessDB = require('./DBAccess/Local/Nedb/DBSystem');
-let feeDB = require('./DBAccess/Local/Nedb/DBFeesAccess');
-let feePayment = require('./DBAccess/Local/Nedb/DBFeesPaymentsAccess');
+const express = require('express');
+const app = express();
+const bodyParser = require("body-parser");
+const studentDB = require('./DBAccess/Local/Nedb/DBstudentAccess');
+const SysAccessDB = require('./DBAccess/Local/Nedb/DBSystem');
+const feeDB = require('./DBAccess/Local/Nedb/DBFeesAccess');
+const feePayment = require('./DBAccess/Local/Nedb/DBFeesPaymentsAccess');
+const users = require('./DBAccess/Local/Nedb/DBUsersAccess');
 
 /*------------------------------------------------------------------------------------------------*/
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -231,6 +232,55 @@ req.body.bankPay  ,  req.body.accountNoPay ,  req.body.commentPay
 	});
 
 });
+/*------------------------------------------------------------------------------------------------*/
+app.post('/addUser' , function (req , res) {
+	
+	users.createUsers( req.body.name_ , req.body.surname_ , req.body.password  , req.body.type_  )
+	.then(function  (response) {		
+		res.json(response);
+	}).catch(function ( err) {
+		console.log(err);
+		console.log("An error during payFees()");
+	});
+
+});
+/*------------------------------------------------------------------------------------------------*/
+app.get('/getUsers',(req, res)=>{
+	users.getAllUsers().then((response)=>{
+		res.json(response);
+	}).catch((err)=>{
+		console.log(err);
+		console.log("err in getUsers()");	
+		
+	});
+});
+/*------------------------------------------------------------------------------------------------*/
+app.post('/editUSer' , function (req , res) {
+	
+	users.editUSer( req.body.lastSelectedID , req.body.name_ , req.body.surname_ , req.body.password  , req.body.type_  )
+	.then(response=> {		
+		res.json(response);
+	}).catch( err => {
+		console.log(err);
+		console.log("An error during editUSer()");
+	});
+
+});
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------------------------------------*/

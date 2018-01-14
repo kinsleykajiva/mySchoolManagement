@@ -27,6 +27,7 @@
     "felix-couchdb": "^1.0.8",
     "got": "^8.0.1",
     "ipc-flux": "^0.5.0",
+    "lodash": "^4.17.4",
     "mysql": "^2.15.0",
     "nedb": "^1.8.0",
     "pouchdb": "^6.4.1",
@@ -36,7 +37,9 @@
     "windowbar": "^1.6.4"
   },
   "devDependencies": {
+    "electron-builder": "^19.52.1",
     "electron-rebuild": "^1.6.0",
+    "electron-winstaller": "^2.6.3",
     "elemon": "^5.0.3",
     "standard": "^10.0.3"
   }

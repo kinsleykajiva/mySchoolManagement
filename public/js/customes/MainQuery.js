@@ -26,80 +26,80 @@ const notificationsShowwTime = 7500;
 function thisNav (navObject) {
 	const nav = $(navObject).attr('id');
 	const contentHolder = $("#content");
+
+	let template = null;
+	let clone = null;
 	
-	let template= null;
-	let  clone = null;
-	//console.log(nav_links);;
 	switch (nav) {
-	case "nav_newStudent":
-	if (lastClickedNAv == nav) {
-		return ;
+		case "nav_newStudent":
+			if (lastClickedNAv == nav) {
+				return;
+			}
+			template = nav_links[0].import.querySelector(".task-template");
+			clone = document.importNode(template.content, true);
+
+			contentHolder
+				.empty()
+				.delay(500)
+				.append(clone);
+			lastClickedNAv = nav;
+
+			break;
+		case "nav_viewStudent":
+			if (lastClickedNAv == nav) {
+				return;
+			}
+			template = nav_links[1].import.querySelector(".task-template");
+			clone = document.importNode(template.content, true);
+
+			contentHolder
+				.empty()
+				.delay(500)
+				.append(clone);
+			lastClickedNAv = nav;
+			break;
+		case "nav_settings":
+			if (lastClickedNAv == nav) {
+				return;
+			}
+			template = nav_links[2].import.querySelector(".task-template");
+			clone = document.importNode(template.content, true);
+
+			contentHolder
+				.empty()
+				.delay(500)
+				.append(clone);
+			lastClickedNAv = nav;
+			break;
+		case "nav_createFees":
+			if (lastClickedNAv == nav) {
+				return;
+			}
+			template = nav_links[3].import.querySelector(".task-template");
+			clone = document.importNode(template.content, true);
+
+			contentHolder
+				.empty()
+				.delay(500)
+				.append(clone);
+
+			break;
+		case "nav_studentPayFees":
+			if (lastClickedNAv == nav) {
+				return;
+			}
+			template = nav_links[4].import.querySelector(".task-template");
+			clone = document.importNode(template.content, true);
+
+			contentHolder
+				.empty()
+				.delay(500)
+				.append(clone);
+
+			lastClickedNAv = nav;
+
+			break;
 	}
-	 template = nav_links[0].import.querySelector(".task-template");
-      clone = document.importNode(template.content, true);
-
-      contentHolder
-        .empty()
-        .delay(500)
-		.append(clone);
-		lastClickedNAv = nav;	
-
-      break;
-	case "nav_viewStudent":
-	if (lastClickedNAv == nav) {
-		return;
-	}
-      template = nav_links[1].import.querySelector(".task-template");
-      clone = document.importNode(template.content, true);
-
-      contentHolder
-        .empty()
-        .delay(500)
-        .append(clone);
-		lastClickedNAv = nav;	
-      break;
-	case "nav_settings":
-	if (lastClickedNAv == nav) {
-		return;
-	}
-      template = nav_links[2].import.querySelector(".task-template");
-      clone = document.importNode(template.content, true);
-
-      contentHolder
-        .empty()
-        .delay(500)
-        .append(clone);
-		lastClickedNAv = nav;	
-      break;
-	case "nav_createFees":
-	if (lastClickedNAv == nav) {
-		return;
-	}
-      template = nav_links[3].import.querySelector(".task-template");
-      clone = document.importNode(template.content, true);
-
-      contentHolder
-        .empty()
-        .delay(500)
-        .append(clone);
-
-      break;
-	case "nav_studentPayFees":
-	if (lastClickedNAv == nav) {
-		return;
-	}
-      template = nav_links[4].import.querySelector(".task-template");
-      clone = document.importNode(template.content, true);
-
-      contentHolder
-        .empty()
-        .delay(500)
-		.append(clone);
-
-		lastClickedNAv = nav;	
-
-      break;
-  }
 }
 /*********************************************************************************************/
 

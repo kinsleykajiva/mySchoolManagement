@@ -1,14 +1,10 @@
 
 
 /*********************************************************************************************/
-
-
-/*********************************************************************************************/
-
-/*********************************************************************************************/
-
-
-/*********************************************************************************************/
+var lastSelectedUser = new Map();
+var lastSelectedID = '';
+const UPDATE_BUTTON_TEXT = "Update";
+const SAVE_BUTTON_TEXT = "Add New User";
 
 /*********************************************************************************************/
 
@@ -16,9 +12,6 @@
 
 
 /*********************************************************************************************/
-
-/*********************************************************************************************/
-
 
 /*********************************************************************************************/
 
@@ -32,9 +25,6 @@
 
 /*********************************************************************************************/
 
-
-/*********************************************************************************************/
-
 /*********************************************************************************************/
 
 
@@ -42,6 +32,166 @@
 
 /*********************************************************************************************/
 
+
+/*********************************************************************************************/
+
+function deleteUser(userid) {
+  const id = $(userid).attr('id');
+  alert(id);
+  
+}
+
+/*********************************************************************************************/
+function editUser(userid) {
+  const id = $(userid).attr('id');
+  lastSelectedID = id;
+  $("#topicHeading").text("Edit User Details");
+  $("#btnSaveUser").text(UPDATE_BUTTON_TEXT);
+  let arrSelect = lastSelectedUser.get(id);
+  $("#addNewUser").val(arrSelect[0]);
+   $("#addNewSurname").val(arrSelect[1]);
+    $("#addPassword").val(arrSelect[3]);
+     $("#addConPassword").val(arrSelect[3]);
+      $("#adduserTypes").val(arrSelect[4]);
+
+      
+       
+  
+  
+}
+/*********************************************************************************************/
+function getAllUsers() {
+  let tbody = $("#usersList");
+  tbody.empty();
+  let userLoadingRow = $("#userLoadingRow");
+  userLoadingRow.slideDown("fast");
+  let userNoDataRow = $("#userNoDataRow");
+  userNoDataRow.slideUp("fast");
+  let loadingErrorRow = $("#loadingErrorRow");
+  loadingErrorRow.slideUp("fast");
+
+
+  $.get("http://localhost:3500/getUsers")
+  .done( (response)=> {
+     userLoadingRow.slideUp("fast");
+     loadingErrorRow.slideUp("fast");
+     if( response.length == 0 ){
+       let userNoDataRow = $("#userNoDataRow");
+     }else{
+        lastSelectedUser.clear();       
+       response.forEach(item => { 
+        lastSelectedUser.set( item._id ,
+          [
+            item.name_ , item.surname_ ,  item.date_ ,  item.password , item.level_type
+          ]   
+        );
+        let tr = "<tr> "+
+        "<td>"+item.name_+ ' ' + item.surname_+ "</td>"+
+        "<td>"+item.level_type+"</td>"+
+         "<td>"+ getDateConvertion(item.date_)+"</td>"+
+          "<td><a onclick='editUser(this)' id='"+item._id+"' href='javascript:void(0)'> Edit </a> &nbsp; "+
+          "<a  onclick='deleteUser(this)' id='"+item._id+"' href='javascript:void(0)'> Del</a> </td>"+
+        " </tr> ";
+        tbody.append(tr);
+       });
+     }
+  }).fail( (err)=> {
+     userLoadingRow.slideUp("fast");
+     loadingErrorRow.slideDown("fast");
+  });
+}
+getAllUsers();
+/*********************************************************************************************/
+function EditUser ( addNewUser ,  addNewSurname , addPassword  , adduserTypes  ) {
+  loadingScreen(true , "Saving Edit ");
+  $.post("http://localhost:3500/editUSer",{
+    lastSelectedID:lastSelectedID ,
+    name_: addNewUser ,
+   surname_: addNewSurname ,
+    password :addPassword ,   
+   level_type: adduserTypes 
+  }).done(response =>{
+    loadingScreen(false , "Saving Edit ");
+      if(response == 'done'  ){
+            getAllUsers();
+            $("#btnSaveUser").text(SAVE_BUTTON_TEXT);
+            $("#topicHeading").text("Add Users");
+      }else{
+        showErrorMessage("Failed to edit the Users details" , 4500);
+      }
+  }).fail(error=>{
+     loadingScreen(false , "Saving Edit ");
+     console.log(error);     
+     showErrorMessage("An error occurres in the background !" , 4500);
+
+  });
+}
+/*********************************************************************************************/
+function saveNewUser ( addNewUser ,  addNewSurname , addPassword  , adduserTypes ) {
+   loadingScreen(true , "Saving ");
+ $.post("http://localhost:3500/addUser",{
+   name_: addNewUser ,
+   surname_: addNewSurname ,
+    password :addPassword ,   
+   level_type: adduserTypes 
+ }).done(function (response) {
+    loadingScreen(false , "Saving ");
+    if( response == "done" ){
+        showSuccessMessage("Saved " , 3200);
+        $("#addNewUser").val("");
+        $("#addNewSurname").val("");
+        $("#addPassword").val("");
+        $("#adduserTypes").val("null");
+        getAllUsers();
+    }else{
+      showErrorMessage("Failed to save, Try again" , 5000);
+    }
+ }).fail(function (error) {
+    loadingScreen(false , "Saving ");
+     showErrorMessage("Server Error, Failed to save, Try again" , 4000);
+ });
+}
+/*********************************************************************************************/
+$("#btnSaveUser").click(function () {
+  let addNewUser = _v("addNewUser").trim();
+  let addNewSurname = _v("addNewSurname").trim();
+  let addPassword = _v("addPassword").trim();
+  let addConPassword = _v("addConPassword").trim();
+  let adduserTypes = _v("adduserTypes");
+  
+  if( addNewUser == '' ){
+    showErrorMessage("Name cant be empty" , 3400);
+    return;
+  }
+  if( addNewSurname == '' ){
+    showErrorMessage("Surname cant be empty" , 3400);
+    return;
+  }
+   if( addPassword == '' ){
+    showErrorMessage("Password cant be empty" , 3400);
+    return;
+  }
+   if( addConPassword == '' ){
+    showErrorMessage("Confirm password" , 3400);
+    return;
+  }
+
+  if( addConPassword !== addPassword ){
+    showErrorMessage("Password and Confirm Password have to be the same " , 3400);
+    return;
+  }
+
+   if( adduserTypes == 'null' ){
+    showErrorMessage("Please set user Level" , 3400);
+    return;
+  }
+  if($(this).text() == UPDATE_BUTTON_TEXT ) {
+      EditUser(   addNewUser ,  addNewSurname , addPassword  , adduserTypes   );
+  }else{
+    saveNewUser(   addNewUser ,  addNewSurname , addPassword  , adduserTypes   );
+  }
+ 
+});
 
 /*********************************************************************************************/
 $("#Btnsave").click(function(){
@@ -57,7 +207,7 @@ $("#Btnsave").click(function(){
   }
   classesNames = classesNames + '';
 
-loadingScreen(true , "Saving ")
+  loadingScreen(true , "Saving ");
   $.post("http://localhost:3500/getStudentSaveGrade",{
      classesNames:classesNames,
     classLevels:classLevels 
