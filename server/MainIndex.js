@@ -1,16 +1,16 @@
 'use strict';
 const { app, BrowserWindow, ipcMain, shell } = require("electron");
-const url = require('url');
-const path = require('path');
-const elemon = require('elemon');
-const fs = require("fs");
-const os = require("os");
+const url                                    = require('url');
+const path                                   = require('path');
+const elemon                                 = require('elemon');
+const fs                                     = require("fs");
+const os                                     = require("os");
 
-let win = null;
-let workerWindow =null;
-let printInvoiceWindow =null;
-const windowWidth = 1500;
-const windowHeight = 800;
+let   win                = null;
+let   workerWindow       = null;
+let   printInvoiceWindow = null;
+const windowWidth        = 1500;
+const windowHeight       = 800;
 
 require('electron-reload')(__dirname, {
   electron: require('${__dirname}/../../node_modules/electron')
@@ -21,21 +21,21 @@ require('electron-reload')(__dirname, {
 function onCreateWindow () {
 	
 		win = new BrowserWindow({
-			width: windowWidth ,
-			height:windowHeight,
-      title: 'Private School Management',
-      backgroundColor: '#312450',
-      titleBarStyle: 'hidden',
-    icon: path.join(__dirname, '../public/images/assets/128/logo.png')
+			width          : windowWidth,
+			height         : windowHeight,
+			title          : 'Private School Management',
+			backgroundColor: '#312450',
+			titleBarStyle  : 'hidden',
+			icon           : path.join(__dirname, '../public/images/assets/128/logo.png')
 		});
 		//win.setMenu(null);
 		win.loadURL(
 				url.format({
-					pathname:path.join(__dirname , '../views','index.html'),
-					protocol:'file:',
-					slashes:true , 
-					titleBarStyle: 'hidden' ,
-					frame: false
+					pathname     : path.join(__dirname , '../views','index.html'),
+					protocol     : 'file:',
+					slashes      : true,
+					titleBarStyle: 'hidden',
+					frame        : false
 				})
 
     );
@@ -47,24 +47,24 @@ function onCreateWindow () {
      
     //
 		elemon({
-			app: app,
+			app     : app,
 			mainFile: 'MainIndex.js',
 			/*bws: [
 					{bw: win, res: ['../views/index.html', '../public/js/customeQuery.js', '../public/css/style.css']}
 			]*/
 		});
 
-		let server = require('./requestsExpress.js');
+let server = require('./requestsExpress.js');
 } // "../views/","invoicePrint.html"
 function createInvoicePrintWindow() {
   // create a child window to process printing
  
   printInvoiceWindow = new BrowserWindow({
-    parent: win,
-    width: 900 - 70,
-    height: 720,
-     titleBarStyle: 'hidden',
-    icon: path.join(__dirname, '../public/images/assets/128/logo.png')
+    parent       : win,
+    width        : 900 - 70,
+    height       : 720,
+    titleBarStyle: 'hidden',
+    icon         : path.join(__dirname, '../public/images/assets/128/logo.png')
     
     /*  frame: false */
   });
@@ -73,11 +73,11 @@ function createInvoicePrintWindow() {
     createInvoicePrintWindow();
   });
   printInvoiceWindow.loadURL(url.format({
-      pathname: path.join(__dirname, "../views", "invoicePrint.html"),
-      protocol: "file:",
-      slashes: true,
+      pathname     : path.join(__dirname, "../views", "invoicePrint.html"),
+      protocol     : "file:",
+      slashes      : true,
       titleBarStyle: "hidden",
-      frame: false
+      frame        : false
     }));
     //printInvoiceWindow.setMenu(null);
     printInvoiceWindow.setMinimizable(false);
@@ -92,11 +92,11 @@ function createWorkerWindow() {
    workerWindow = new BrowserWindow({show: false});
    workerWindow.hide();
    workerWindow.loadURL(url.format({
-       pathname: path.join(__dirname, "../views", "worker.html"),
-       protocol: "file:",
-       slashes: true,
+       pathname     : path.join(__dirname, "../views", "worker.html"),
+       protocol     : "file:",
+       slashes      : true,
        titleBarStyle: "hidden",
-       frame: false
+       frame        : false
      }));
 
    // workerWindow.webContents.openDevTools();
@@ -107,7 +107,7 @@ function createWorkerWindow() {
 ipcMain.on("printPDF111", (event, content) => {
 	
   const pdfPath = path.join(os.tmpdir(), "print.pdf");
-  const winn = BrowserWindow.fromWebContents(event.sender);
+  const winn    = BrowserWindow.fromWebContents(event.sender);
 
   winn.webContents.printToPDF({}, function(error, data) {
     if (error) throw error;

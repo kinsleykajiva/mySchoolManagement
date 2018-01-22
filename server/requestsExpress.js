@@ -4,14 +4,16 @@
  *
  */
 
-const express = require('express');
-const app = express();
-const bodyParser = require("body-parser");
-const studentDB = require('./DBAccess/Local/Nedb/DBstudentAccess');
-const SysAccessDB = require('./DBAccess/Local/Nedb/DBSystem');
-const feeDB = require('./DBAccess/Local/Nedb/DBFeesAccess');
-const feePayment = require('./DBAccess/Local/Nedb/DBFeesPaymentsAccess');
-const users = require('./DBAccess/Local/Nedb/DBUsersAccess');
+const express       = require('express');
+const app           = express();
+const bodyParser    = require("body-parser");
+const studentDB     = require('./DBAccess/Local/Nedb/DBstudentAccess');
+const SysAccessDB   = require('./DBAccess/Local/Nedb/DBSystem');
+const feeDB         = require('./DBAccess/Local/Nedb/DBFeesAccess');
+const feePayment    = require('./DBAccess/Local/Nedb/DBFeesPaymentsAccess');
+const users         = require('./DBAccess/Local/Nedb/DBUsersAccess');
+var   SqlString     = require('sqlstring');
+const mysqlStudents = require('./DBAccess/Remote/Mysql/DBStudentAccess');
 
 /*------------------------------------------------------------------------------------------------*/
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -256,7 +258,7 @@ app.get('/getUsers',(req, res)=>{
 });
 /*------------------------------------------------------------------------------------------------*/
 app.post('/editUSer' , function (req , res) {
-	
+
 	users.editUSer( req.body.lastSelectedID , req.body.name_ , req.body.surname_ , req.body.password  , req.body.type_  )
 	.then(response=> {		
 		res.json(response);
@@ -289,12 +291,58 @@ app.post('/editUSer' , function (req , res) {
 /*------------------------------------------------------------------------------------------------*/
 
 /*------------------------------------------------------------------------------------------------*/
-
+var CURRENT_TIMESTAMP = {
+	toSqlString: function () {
+		return 'NOW()';
+	}
+};
 /*------------------------------------------------------------------------------------------------*/
-app.listen(3500 , function () {
+app.listen(3500 , () => {
 	
 	console.log('working express');
+	/* let ject = {
+		name              : 'Wink y',
+		surname           : 'CAES',
+		dob               : '12/1/1111',
+		gender            : 'male',
+		address           : 'CARAS',
+		reg_no            : 'Pret44O',
+		reg_date          : '2017-01-19',
+		reg_time          : '11:45:53',
+		contact_no        : 'email',
+		email             : 'sai@cc.ge',
+		class_name        : '["Blue" , "Green"]',
+		class_level       : "[2,3]",
+		current_className : "1",
+		current_classLevel: 'Blue',
+		school_years      : '[2011,2013]',
+		parent_name       : 'saige',
+		parent_surname    : 'tarterterpiwa',
+		parent_id         : 's1212a343ige',
+		parent_address    : 'tapi tyt t6675 fhhhwa',
+		parent_contact_no : '9643-232-454',
+		parent_email      : 'tapi@c.wa'
+	};
+	mysqlStudents.saveNewStudent(JSON.stringify(ject)).then(response => {
+		console.log(response);
+		
+	}).catch(error => {
+		console.log(error);
+			
+	}); */
+	/* mysqlStudents.getAllStudents().then(response => {
+		let jsResponse = JSON.stringify(response);
+		console.log(jsResponse);
+		response.forEach((row) => {
+			console.log(`${row.name} is in ${row.id}`);
+		});
+		
+	}).catch(err => { 
+		console.log(err);
+		
+	  });*/
 });
+
 
 
 

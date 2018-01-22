@@ -1,5 +1,3 @@
-import { resolve } from 'path';
-
 let Datastore = require('nedb');
 let db = new Datastore({
 	filename: 'Users.db',
@@ -13,11 +11,11 @@ module.exports.createUsers = function ( name_ , surname_ , password ,  type_ ) {
 
 	return new Promise((resolve , reject)=>{
 		let user = {
-			'name_':name_ , 
-			'surname_' : surname_ , 
-			'password' : password ,
-			'level_type':type_ ,
-			'date_' : new Date() 
+			'name_'     : name_,
+			'surname_'  : surname_,
+			'password'  : password,
+			'level_type': type_,
+			'date_'     : new Date()
 		};
 		db.insert(user , (err , docs)=>{
 			if(!err){
@@ -49,13 +47,13 @@ module.exports.getAllUsers = function () {
 module.exports.editUSer = function (id ,name_ , surname_ , password ,  type_  ) {
 	return new Promise((resolve , reject)=>{
 		db.update({
-			_id:id
+			_id: id
 		},{
 			$set:{
-				'name_':name_ , 
-			'surname_' : surname_ , 
-			'password' : password ,
-			'level_type':type_ 
+				'name_'     : name_,
+				'surname_'  : surname_,
+				'password'  : password,
+				'level_type': type_
 			}
 		},{multi:false},(err , updates)=>{
 			if(!err){
