@@ -175,12 +175,15 @@ module.exports.updateStudent = (reg_no, studentObject, studentObjectOld) => {
       let arrData = null;
       let newD    = JSON.parse(studentObject);
       let oldD    = JSON.parse(studentObjectOld);
+      let h       = JSON.parse(oldD.school_years);
+      h.push(new Date().getFullYear());
+      //check if the dates have changed 
+      let newSchoolyears = newD.school_years !== oldD.school_years ? '[' + h + ']' : oldD.school_years;
       // to check if any changes have been made by the user to a student record about grade level or class Name
       if (newD.current_classLevel !== oldD.current_classLevel) {
         let k = JSON.parse(oldD.current_classLevel);
         k.push(newD.current_classLevel);
         let new_classLevels = '['+ k  + ']';
-        let newSchoolyears  = newD.school_years !== oldD.school_years ? '[' + JSON.parse(oldD.school_years).push(new Date().getFullYear()) + ']' : oldD.school_years;
             arrData         = [
           newD.name, newD.surname, newD.dob, newD.gender, newD.address, newD.contact_no, newD.email, newD.current_className, new_classLevels , newD.current_className,
           newD.current_classLevel, newSchoolyears , newD.parent_name, newD.parent_surname, newD.parent_id, newD.parent_address, newD.parent_contact_no, newD.parent_email,
@@ -190,7 +193,6 @@ module.exports.updateStudent = (reg_no, studentObject, studentObjectOld) => {
         let k = JSON.parse(oldD.current_className);
         k.push(newD.current_className)
         let new_classNames = '[' + k + ']';
-        let newSchoolyears = newD.school_years !== oldD.school_years ? '[' + JSON.parse(oldD.school_years).push(new Date().getFullYear()) + ']' : oldD.school_years;
             arrData        = [
           newD.name, newD.surname, newD.dob, newD.gender, newD.address, newD.contact_no, newD.email, new_classNames,  newD.current_classLevel, newD.current_className,
           newD.current_classLevel, newSchoolyears , newD.parent_name, newD.parent_surname, newD.parent_id, newD.parent_address, newD.parent_contact_no, newD.parent_email,
@@ -277,10 +279,13 @@ module.exports.graduateStudentsStream = (fromGradeLevel, toGradeLevel) => {
     let qry = "";
     results.forEach(element => {
       let k = JSON.parse(element.class_level);
+      let h = JSON.parse(element.school_years);
+      h.push(new Date().getFullYear());
       k.push(toGradeLevel);
       let newclass_level  = '[' + k + ']';
+      let newSchoolyears  = '[' + h +']';
           qry            += "UPDATE " + STUDENTS_TABLE + "SET current_classLevel = '" + toGradeLevel + "' , class_level = '" +
-        newclass_level + "' WHERE reg_no = '" + element.reg_no + "' ;";
+        newclass_level + "' , school_years = '" + newSchoolyears + "' WHERE reg_no = '" + element.reg_no + "' ;";
       
     }); 
     conM.connect(err => {
