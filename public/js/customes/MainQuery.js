@@ -2,7 +2,7 @@ const nav_links = document.querySelectorAll('link[rel="import"]');
 
 var lastClickedNAv = "";
 
-var shouldLoadView = true;
+var   shouldLoadView         = true;
 const notificationsShowwTime = 7500;
 
 
@@ -16,27 +16,55 @@ const notificationsShowwTime = 7500;
 /*********************************************************************************************/
 
 /*********************************************************************************************/
+/**
+ * Creates a random String based on the chars input <br>
+ * example of usage: randomString(5); or randomString(5, 'PICKCHARSFROMTHISSET');
+ * <br>
+ * @param {integer} length - size of the output .
+ * @param {string} chars - can be ignored ,but the the characters to use in creating the output.
+ * @returns {String} Random string of size @param lenSize
+*/
+function randomIDString(lenSize, chars) {
+	    let charSet      = chars || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	    let randomString = "";
+		for (let i = 0; i < lenSize; i++){
+			let position      = Math.floor(Math.random() * charSet.length);
+			    randomString += charSet.substring(position, position + 1);
+		}
+	return randomString;
+}
 
 /*********************************************************************************************/
+/**
+ * Create a random String of alphabet and numbers
+ * @returns {string} Random String
+ */
+function randomStringID() {
+	var text     = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-/*********************************************************************************************/
+	for (var i = 0; i < 5; i++){
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
 
+	return text;
+}
 
 /*********************************************************************************************/
 function thisNav (navObject) {
-	const nav = $(navObject).attr('id');
+	const nav           = $(navObject).attr('id');
 	const contentHolder = $("#content");
 
 	let template = null;
-	let clone = null;
+	let clone    = null;
 	
 	switch (nav) {
-		case "nav_newStudent":
+		case "nav_newStudent": 
 			if (lastClickedNAv == nav) {
 				return;
 			}
 			template = nav_links[0].import.querySelector(".task-template");
-			clone = document.importNode(template.content, true);
+			clone    = document.importNode(template.content, true);
 
 			contentHolder
 				.empty()
@@ -45,12 +73,12 @@ function thisNav (navObject) {
 			lastClickedNAv = nav;
 
 			break;
-		case "nav_viewStudent":
+		case "nav_viewStudent": 
 			if (lastClickedNAv == nav) {
 				return;
 			}
 			template = nav_links[1].import.querySelector(".task-template");
-			clone = document.importNode(template.content, true);
+			clone    = document.importNode(template.content, true);
 
 			contentHolder
 				.empty()
@@ -58,12 +86,12 @@ function thisNav (navObject) {
 				.append(clone);
 			lastClickedNAv = nav;
 			break;
-		case "nav_settings":
+		case "nav_settings": 
 			if (lastClickedNAv == nav) {
 				return;
 			}
 			template = nav_links[2].import.querySelector(".task-template");
-			clone = document.importNode(template.content, true);
+			clone    = document.importNode(template.content, true);
 
 			contentHolder
 				.empty()
@@ -71,12 +99,12 @@ function thisNav (navObject) {
 				.append(clone);
 			lastClickedNAv = nav;
 			break;
-		case "nav_createFees":
+		case "nav_createFees": 
 			if (lastClickedNAv == nav) {
 				return;
 			}
 			template = nav_links[3].import.querySelector(".task-template");
-			clone = document.importNode(template.content, true);
+			clone    = document.importNode(template.content, true);
 
 			contentHolder
 				.empty()
@@ -84,12 +112,12 @@ function thisNav (navObject) {
 				.append(clone);
 
 			break;
-		case "nav_studentPayFees":
+		case "nav_studentPayFees": 
 			if (lastClickedNAv == nav) {
 				return;
 			}
 			template = nav_links[4].import.querySelector(".task-template");
-			clone = document.importNode(template.content, true);
+			clone    = document.importNode(template.content, true);
 
 			contentHolder
 				.empty()
@@ -127,8 +155,8 @@ function getSystemName() {
 function randString(x){
     var s = "";
     while(s.length<x&&x>0){
-        var r = Math.random();
-        s+= (r<0.1?Math.floor(r*100):String.fromCharCode(Math.floor(r*26) + (r>0.5?97:65)));
+        var r  = Math.random();
+            s += (r<0.1?Math.floor(r*100):String.fromCharCode(Math.floor(r*26) + (r>0.5?97:65)));
     }
     return s;
 }
@@ -151,13 +179,13 @@ function getRndInteger(min, max) {
  */
 function receiptNumber () {
 	
-	let ret = "";
-	ret = getcurrentDate()  ;  //  dd + '/' + mm + '/' + yyyy;
-	let dd = ret.split('/')[0];
-	let mm = ret.split('/')[1];
+	let ret  = "";
+	    ret  = getcurrentDate()  ;                                                                                                //  dd + '/' + mm + '/' + yyyy;
+	let dd   = ret.split('/')[0];
+	let mm   = ret.split('/')[1];
 	let yyyy = ret.split('/')[2];
 	let ranS = randString(getRndInteger(5,8)).toUpperCase();
-	ret = dd + ranS.substring(2,4)+ ranS.charAt(getRndInteger(1,2)) + '-' + mm +'-'+ ranS.charAt(getRndInteger(1,4))+yyyy ;
+	    ret  = dd + ranS.substring(2,4)+ ranS.charAt(getRndInteger(1,2)) + '-' + mm +'-'+ ranS.charAt(getRndInteger(1,4))+yyyy ;
 	
 
 	return ret;
@@ -236,15 +264,15 @@ function loadingScreenElement(elementID, show, message) {
 	if (show) {
 
 		$('#' + elementID).block({
-			message: message == '' ? "<h1>Processing</h1>" : "<h1> "+message+" </h1>",
-			css: {
-				border: 'none',
-				padding: '15px',
-				backgroundColor: '#000',
+			message: message == '' ? "<h1>Processing</h1>": "<h1> "+message+" </h1>",
+			css    : {
+				border                 : 'none',
+				padding                : '15px',
+				backgroundColor        : '#000',
 				'-webkit-border-radius': '10px',
-				'-moz-border-radius': '10px',
-				opacity: .5,
-				color: '#fff'
+				'-moz-border-radius'   : '10px',
+				opacity                : .5,
+				color                  : '#fff'
 			}
 		});
 	} else {
@@ -256,15 +284,15 @@ function loadingScreenElement(elementID, show, message) {
 function loadingScreen(sho, message) {
 	if (sho) {
 		$.blockUI({
-			message: message == '' ? "<h3> Processing.Please Wait...</h3>" : "<h3> " + message + "</h3>",
-			css: {
-				border: 'none',
-				padding: '15px',
-				backgroundColor: '#000',
+			message: message == '' ? "<h3> Processing.Please Wait...</h3>": "<h3> " + message + "</h3>",
+			css    : {
+				border                 : 'none',
+				padding                : '15px',
+				backgroundColor        : '#000',
 				'-webkit-border-radius': '10px',
-				'-moz-border-radius': '10px',
-				opacity: .5,
-				color: '#fff'
+				'-moz-border-radius'   : '10px',
+				opacity                : .5,
+				color                  : '#fff'
 			}
 		});
 	} else {
@@ -283,21 +311,21 @@ function isInRange(obj) {
 /*********************************************************************************************/
 function showGeneralMessage(message, time) {
 	$.toast({
-		heading: '',
-		text: message == '' ? "Hi." : message,
-		hideAfter: time == 0 ? notificationsShowwTime : time,
-		position: 'mid-center',
-		stack: false
+		heading  : '',
+		text     : message == '' ? "Hi."             : message,
+		hideAfter: time == 0 ? notificationsShowwTime: time,
+		position : 'mid-center',
+		stack    : false
 	});
 }
 /*********************************************************************************************/
 function showSuccessMessage(message, time) {
 	$.toast({
-		heading: 'Success',
-		text: message == '' ? "Hi." : message,
-		hideAfter: time == 0 ? notificationsShowwTime : time,
-		position: 'top-right',
-		icon: 'success'
+		heading  : 'Success',
+		text     : message == '' ? "Hi."             : message,
+		hideAfter: time == 0 ? notificationsShowwTime: time,
+		position : 'top-right',
+		icon     : 'success'
 	});
 }
 
@@ -305,22 +333,22 @@ function showSuccessMessage(message, time) {
 
 function showWarningMessage(message, time) {
 	$.toast({
-		heading: 'Warning',
-		text: message == '' ? "Hi." : message,
-		hideAfter: time == 0 ? notificationsShowwTime : time,
-		position: 'top-right',
-		icon: 'warning'
+		heading  : 'Warning',
+		text     : message == '' ? "Hi."             : message,
+		hideAfter: time == 0 ? notificationsShowwTime: time,
+		position : 'top-right',
+		icon     : 'warning'
 	});
 }
 
 /*********************************************************************************************/
 function showErrorMessage(message, time) {
 	$.toast({
-		heading: 'Error',
-		text: message == '' ? "Hi." : message,
-		hideAfter: time == 0 ? notificationsShowwTime : time,
-		position: 'top-right',
-		icon: 'error'
+		heading  : 'Error',
+		text     : message == '' ? "Hi."             : message,
+		hideAfter: time == 0 ? notificationsShowwTime: time,
+		position : 'top-right',
+		icon     : 'error'
 	});
 }
 
@@ -328,21 +356,21 @@ function showErrorMessage(message, time) {
 /*********************************************************************************************/
 function showSimpleToast() {
 	$.toast({
-		heading: 'Information',
-		text: 'Now you can add icons to generate different kinds of toasts',
+		heading           : 'Information',
+		text              : 'Now you can add icons to generate different kinds of toasts',
 		showHideTransition: 'slide',
-		hideAfter: notificationsShowwTime,
-		position: 'top-right',
-		icon: 'info'
+		hideAfter         : notificationsShowwTime,
+		position          : 'top-right',
+		icon              : 'info'
 	});
 }
 
 /*********************************************************************************************/
 function getcurrentDate() {
 	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth() + 1; //January is 0!
-	var yyyy = today.getFullYear();
+	var dd    = today.getDate();
+	var mm    = today.getMonth() + 1;  //January is 0!
+	var yyyy  = today.getFullYear();
 
 	if (dd < 10) {
 		dd = '0' + dd
