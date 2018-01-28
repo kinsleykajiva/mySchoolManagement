@@ -5,6 +5,9 @@
 /** @constant {string} Server name */
 const HOST = "localhost";
 
+/** @constant {number} Mysql port */
+const CONNECTION_PORT = 3305;
+
 /** @constant {string} Database user accessing the database */
 const USER = "root";
 
@@ -20,8 +23,17 @@ const USERS_TABLE = "xusersx";
 /** @constant {string} Students table */
 const STUDENTS_TABLE = "xstudentsx";
 
-/** @constant {number} Mysql port */
-const CONNECTION_PORT = 3305;
+/** @constant {string} Fees table */
+const FEES_TABLE = "xfeesx";
+
+/** @constant {string} Fess Payments table */
+const FEES_PAYMENTS_TABLE = "xfees_paymentsx";
+
+/** @constant {string} Salting column */
+const SALT_COLUMN = "xtownx";
+
+/** @constant {string} Encryption Algorithm */
+const ENCODE_ALGORITHM = 'aes-256-ctr';
 /********************************************************************************************************************************************************************* */
 /********************************************************************************************************************************************************************* */
 /**
@@ -47,7 +59,16 @@ function getCurrentDate() {
 }
 /********************************************************************************************************************************************************************* */
 
-
+/**
+ * Gets the random integer between min and max (both included)
+ *
+ * @param      {number}  min     The minimum
+ * @param      {number}  max     The maximum
+ * @returns    {number}  The random integer.
+ */
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
 /********************************************************************************************************************************************************************* */

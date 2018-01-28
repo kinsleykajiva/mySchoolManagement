@@ -27,8 +27,8 @@ const studentTable = "CREATE TABLE `xschool_managex`.`xstudentsx`( " +
                         " `gender` VARCHAR(7) NOT NULL ," +
                         "`address` TEXT NOT NULL ," +
                         "`reg_no` VARCHAR(250) NOT NULL ," +
-                        "`reg_date` DATE NOT NULL ," +
-                        "`reg_time` TIME NOT NULL ," +
+                        "`reg_date` VARCHAR(50) NOT NULL ," +
+                        "`reg_time` VARCHAR(20) NOT NULL ," +
                         "`contact_no` VARCHAR(110) NOT NULL ," +
                         "`email` VARCHAR(111) NOT NULL ," +
                         "`class_name`  JSON NOT NULL ," +
@@ -76,7 +76,7 @@ module.exports.saveNewStudent = function (studentObject) {
     con.connect(function (err) {
       if (err) {
         reject(err);
-        throw err;
+        
         }
         con.query("INSERT INTO " + STUDENTS_TABLE + " SET ?", stdObj, (err, result, fields) => {
           if ( !err ) {
@@ -100,7 +100,7 @@ module.exports.getAllStudents = function () {
     con.connect( (err)=> {
       if (err) {
         reject(err);
-        throw err;
+        
      }
       con.query("SELECT * FROM " + STUDENTS_TABLE , (err, results, fields) => {
         if (!err) {        
@@ -122,7 +122,7 @@ module.exports.searchStudents = (query) => {
     con.connect(err => {
       if (err) {
         reject(err);
-        throw err;
+        
       } 
       con.query( "SELECT name , surname, reg_no FROM " + STUDENTS_TABLE + " WHERE name LIKE %" +
        query + "% OR surname LIKE %" + query + "% OR reg_no LIKE %"+query + "%"  , (err , results , fields)=>{
@@ -146,7 +146,7 @@ module.exports.searchStudentGrade = (query, gradeLevel) => {
   con.connect(err => {
     if (err) {
       reject(err);
-      throw err;
+     
     } else {
       con.query("SELECT name , surname , reg_no , current_classLevel FROM " + STUDENTS_TABLE + " WHERE name LIKE %" +
         query + "% OR surname LIKE %" + query + "% OR reg_no LIKE %" + query + "% AND current_classLevel =" + gradeLevel, (err, results, fields) => {
@@ -163,20 +163,20 @@ module.exports.searchStudentGrade = (query, gradeLevel) => {
 /**Update a Student Record 
  * @param {string} reg_no - to identify record .
  * @param {JSON} studentObject - student data to save.
- * @param {JSON} studentObjectOld - old student data to save.
+ * @param {JSON} studentObjectOld - old student data to make references from.
  * @returns {Promise<string>} Promise - solves a String 'done' | 'failed'.
 */
 module.exports.updateStudent = (reg_no, studentObject, studentObjectOld) => {
   con.connect(err => { 
     if (err) {
       reject(err);
-      throw err;
+      
     } else {
       let arrData = null;
       let newD    = JSON.parse(studentObject);
       let oldD    = JSON.parse(studentObjectOld);
       let h       = JSON.parse(oldD.school_years);
-      h.push(new Date().getFullYear());
+      h.push(new Date().getFullYear() + '');
       //check if the dates have changed 
       let newSchoolyears = newD.school_years !== oldD.school_years ? '[' + h + ']' : oldD.school_years;
       // to check if any changes have been made by the user to a student record about grade level or class Name
@@ -205,7 +205,8 @@ module.exports.updateStudent = (reg_no, studentObject, studentObjectOld) => {
           reg_no
         ];
       }
-      con.query("UPDATE " + STUDENTS_TABLE +  "SET  name = ? , surname = ?, dob = ?, gender= ?, address= ?, reg_no = ?,  contact_no = ?, email = ?, class_name = ?, class_level = ?, current_className = ?, current_classLevel = ?," +
+      con.query("UPDATE " + STUDENTS_TABLE + "SET  name = ? , surname = ?, dob = ?, gender= ?, address= ?, reg_no = ?,  contact_no = ?, email = ?, class_name = ?, class_level = ?, " +
+        "current_className = ?, current_classLevel = ?," +
         " school_years = ?, parent_name = ?, parent_surname = ?, parent_id = ?, parent_address = ?, parent_contact_no = ?, parent_email = ?" +
         " WHERE reg_no = ?", arrData, (err, results, fields) => {
           
@@ -230,7 +231,7 @@ module.exports.deleteStudent = (reg_no) => {
     con.connect(err => {
       if (err) {
         reject(err);
-        throw err;
+        
       }
       con.query("DELETE FROM " + STUDENTS_TABLE + " WHERE reg_no = " + reg_no, (err, results, fields) => { 
         if (err) {
@@ -280,7 +281,7 @@ module.exports.graduateStudentsStream = (fromGradeLevel, toGradeLevel) => {
     results.forEach(element => {
       let k = JSON.parse(element.class_level);
       let h = JSON.parse(element.school_years);
-      h.push(new Date().getFullYear());
+      h.push(new Date().getFullYear()+'');
       k.push(toGradeLevel);
       let newclass_level  = '[' + k + ']';
       let newSchoolyears  = '[' + h +']';

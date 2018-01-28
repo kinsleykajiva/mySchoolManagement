@@ -7,14 +7,14 @@ let db = new Datastore({
 module.exports.payFees = function( a  , b , c , d ,  e , f , g ){
 			return new Promise( function (resolve , reject) {				
 				let fee_payments = {
-					'receipt': b,
-					'amount': d,
-					'date_': new Date() ,
+					'receipt'       : b,
+					'amount'        : d,
+					'date_'         : new Date(),
 					'student_paying': c,
 					'payment_method': e,
-					'bank': f,
-					'bank_account':g,
-					'description': a // payment doen via what account of what bank
+					'bank'          : f,
+					'bank_account'  : g,
+					'description'   : a            // payment doen via what account of what bank
 				};						
 				db.insert(fee_payments, function (err , newDoc) {
 				
@@ -24,12 +24,12 @@ module.exports.payFees = function( a  , b , c , d ,  e , f , g ){
 						reject(err);
 					}
 				});
-			}	);
+			});
 };
 
 /*-------------------------------------------------------------------------------------------------------*/
 
-module.exports.getFees = function () {
+module.exports.getFees = ()=> {
 	return new Promise(function (resolve , reject) {
 		db.find({},function (err , docs) {
 			if(!err){
@@ -47,14 +47,14 @@ module.exports.getStudentPayments = function (amountToBePaid , regNum) {
 	return new Promise(function (resolve , reject) {
 		
 		db.find({
-			student_paying:regNum
+			student_paying: regNum
 		} , function (err , docs) {
 			
 			if(!err){
 				//var jString = JSON.stringify(response);
 				let sonJ = {
-					'amt':amountToBePaid ,
-					'j':docs
+					'amt': amountToBePaid,
+					'j'  : docs
 				};
 				resolve(sonJ);
 			}else{

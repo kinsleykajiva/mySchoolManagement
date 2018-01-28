@@ -17,6 +17,8 @@
     "@mysql/xdevapi": "^8.0.8",
     "about-window": "^1.8.0",
     "async": "^2.6.0",
+    "bcrypt": "^1.0.3",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "couchdb": "^0.3.8",
     "electron": "^1.7.10",
