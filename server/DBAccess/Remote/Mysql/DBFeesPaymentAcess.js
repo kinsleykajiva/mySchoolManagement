@@ -9,14 +9,14 @@ const {
     List
 } = require('immutable');
 const con = mysql.createConnection({
-    host    : HOST,
-    user    : USER,
-    password: PASSWORD,
-    port    : CONNECTION_PORT,
+    host    : util.HOST,
+    user    : util.USER,
+    password: util.PASSWORD,
+    port    : util.CONNECTION_PORT,
     debug   : false,
-    database: STUDENTS_DATABASE
+    database: util.STUDENTS_DATABASE
 });
-const sw = "CREATE TABLE " + FEES_PAYMENTS_TABLE + " IF NOT EXISTS (" +
+const sw = "CREATE TABLE " + util.FEES_PAYMENTS_TABLE + " IF NOT EXISTS (" +
     "`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT , " +
     "`receipt` VARCHAR(250) NOT NULL ," +
     "`amount` VARCHAR(250) NOT NULL ," +
@@ -40,7 +40,7 @@ module.exports.payFees = paymentObject => {
             if (err) {
                 reject(err);
             } else{ 
-                con.query("INSERT INTO " + FEES_PAYMENTS_TABLE + "  SET ? " , paymentObject , (err, results, fields) => {
+                con.query("INSERT INTO " + util.FEES_PAYMENTS_TABLE + "  SET ? ", paymentObject, (err, results, fields) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -63,7 +63,7 @@ module.exports.getStudentPayments = reg_no => {
             if (err) {
                 reject(err);
             } else { 
-                con.query("SELECT amount , reg_no FROM " + FEES_PAYMENTS_TABLE + " WHERE reg_no = '" + reg_no + "' ", (err, results, fields) => { 
+                con.query("SELECT amount , reg_no FROM " +  util.FEES_PAYMENTS_TABLE + " WHERE reg_no = '" + reg_no + "' ", (err, results, fields) => { 
                     if (err) {
                         reject(err);
                     } else { 
@@ -86,7 +86,7 @@ module.exports.getAllPayments = () => {
             if (err) {
                 reject(err);
             } else {
-                con.query("SELECT * FROM " + FEES_PAYMENTS_TABLE, (err, results, fields) => {
+                con.query("SELECT * FROM " + util.FEES_PAYMENTS_TABLE, (err, results, fields) => {
                     if (err) {
                         reject(err);
                     } else {

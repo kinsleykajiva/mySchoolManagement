@@ -12,15 +12,15 @@ const security  = require('../../../Utils/encrypt');
 var   crypto    = require('crypto');
 const { List }  = require('immutable');
 const con       = mysql.createConnection({
-    host    : HOST,
-    user    : USER,
-    password: PASSWORD,
-    port    : CONNECTION_PORT,
+    host    : util.HOST,
+    user    : util.USER,
+    password: util.PASSWORD,
+    port    : util.CONNECTION_PORT,
     debug   : false,
-    database: STUDENTS_DATABASE
+    database: util.STUDENTS_DATABASE
 });
 /*-------------------------------------------------------------------------------------------------------*/
-const create = "CREATE TABLE " + USERS_TABLE + " IF EXISTS (" +
+const create = "CREATE TABLE " +  util.USERS_TABLE + " IF EXISTS (" +
     "`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT , " +
     "`name` VARCHAR(250) NOT NULL ," +
     "`surname` VARCHAR(250) NOT NULL ," +
@@ -45,15 +45,15 @@ module.exports.createUser = userObject => {
             if (err) {
                 reject(err);
             } else {
-                con.query("SELECT email FROM " + USERS_TABLE + " WHERE email = '" + userObject.email + "'", (err, results, fields) => {
+                con.query("SELECT email FROM " + util.USERS_TABLE + " WHERE email = '" + userObject.email + "'", (err, results, fields) => {
                     if (err) { 
                         reject(err);
                     } else {
                         if (results.length < 1) {
                             
-                            userObject.password = encryptPassword(userObject.password);
+                            userObject.password = util.encryptPassword(userObject.password);
                             
-                            con.query("INSERT INTO " + USERS_TABLE + " SET ?", userObject, (err, results, fields) => {
+                            con.query("INSERT INTO " + util.USERS_TABLE + " SET ?", userObject, (err, results, fields) => {
                                 if (err) {
                                     reject(err);
                                 } else {
@@ -101,15 +101,17 @@ module.exports.getAllUsers = () => {
  */
 module.exports.editUser = (id , userObject) => {
     return new Promise((resolve, reject) => {
-        userObject = JSON.parse(userObject);
+        userObject          = JSON.parse(userObject);
+        userObject.password = util.encryptPassword(userObject.password);
         con.connect(err => { 
             if (err) { 
                 reject(err);
             } else {
+                           
                 let data = [
                     userObject.name, userObject.surname, userObject.email, userObject.password, userObject.id
-                ]
-                con.query("UPDATE " + USERS_TABLE + "SET name = ? , surname = ?  , email = ? , password = ? , usertype = ? WHERE id = ? ", data , (err, results, fields) => {
+                ];
+                con.query("UPDATE " + util.USERS_TABLE + "SET name = ? , surname = ?  , email = ? , password = ? , usertype = ? WHERE id = ? ", data, (err, results, fields) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -131,7 +133,7 @@ module.exports.deleteUSer = id => {
         if (err) {
             reject(err);
         } else {
-            con.query("DELETE FROM " + USERS_TABLE + "WHERE id = '" + id + "'", (err, results, fields) => { 
+            con.query("DELETE FROM " + util.USERS_TABLE + "WHERE id = '" + id + "'", (err, results, fields) => {
                 if (err) {
                     reject(err);
                 } else {

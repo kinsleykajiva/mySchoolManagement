@@ -9,12 +9,12 @@ const mysql     = require('mysql');
 const SqlString = require('sqlstring');
 const { List }  = require('immutable');
 const con       = mysql.createConnection({
-      host    : HOST,
-      user    : USER,
-      password: PASSWORD,
-      port    : CONNECTION_PORT,
+      host    : util.HOST,
+      user    : util.USER,
+      password: util.PASSWORD,
+      port    : util.CONNECTION_PORT,
       debug   : false,
-      database: STUDENTS_DATABASE
+      database: util.STUDENTS_DATABASE
 });
 
 
@@ -78,7 +78,7 @@ module.exports.saveNewStudent = function (studentObject) {
         reject(err);
         
         }
-        con.query("INSERT INTO " + STUDENTS_TABLE + " SET ?", stdObj, (err, result, fields) => {
+        con.query("INSERT INTO " + util.STUDENTS_TABLE + " SET ?", stdObj, (err, result, fields) => {
           if ( !err ) {
             resolve(result.affectedRows > 0 ? "done" :"failed");
           } else { 
@@ -102,7 +102,7 @@ module.exports.getAllStudents = function () {
         reject(err);
         
      }
-      con.query("SELECT * FROM " + STUDENTS_TABLE , (err, results, fields) => {
+      con.query("SELECT * FROM " + util.STUDENTS_TABLE, (err, results, fields) => {
         if (!err) {        
             resolve(results);
         } else {
@@ -124,7 +124,7 @@ module.exports.searchStudents = (query) => {
         reject(err);
         
       } 
-      con.query( "SELECT name , surname, reg_no FROM " + STUDENTS_TABLE + " WHERE name LIKE %" +
+      con.query( "SELECT name , surname, reg_no FROM " +  util.STUDENTS_TABLE + " WHERE name LIKE %" +
        query + "% OR surname LIKE %" + query + "% OR reg_no LIKE %"+query + "%"  , (err , results , fields)=>{
          if (err) { 
            reject(err);
@@ -205,7 +205,7 @@ module.exports.updateStudent = (reg_no, studentObject, studentObjectOld) => {
           reg_no
         ];
       }
-      con.query("UPDATE " + STUDENTS_TABLE + "SET  name = ? , surname = ?, dob = ?, gender= ?, address= ?, reg_no = ?,  contact_no = ?, email = ?, class_name = ?, class_level = ?, " +
+      con.query("UPDATE " +  util.STUDENTS_TABLE + "SET  name = ? , surname = ?, dob = ?, gender= ?, address= ?, reg_no = ?,  contact_no = ?, email = ?, class_name = ?, class_level = ?, " +
         "current_className = ?, current_classLevel = ?," +
         " school_years = ?, parent_name = ?, parent_surname = ?, parent_id = ?, parent_address = ?, parent_contact_no = ?, parent_email = ?" +
         " WHERE reg_no = ?", arrData, (err, results, fields) => {
@@ -233,7 +233,7 @@ module.exports.deleteStudent = (reg_no) => {
         reject(err);
         
       }
-      con.query("DELETE FROM " + STUDENTS_TABLE + " WHERE reg_no = " + reg_no, (err, results, fields) => { 
+      con.query("DELETE FROM " +  util.STUDENTS_TABLE + " WHERE reg_no = " + reg_no, (err, results, fields) => { 
         if (err) {
           reject(err);
         } else {
@@ -254,20 +254,20 @@ module.exports.deleteStudent = (reg_no) => {
  */
 module.exports.graduateStudentsStream = (fromGradeLevel, toGradeLevel) => {
   const conM = mysql.createConnection({
-    host              : HOST,
-    user              : USER,
-    password          : PASSWORD,
-    port              : CONNECTION_PORT,
+    host              : util.HOST,
+    user              : util.USER,
+    password          : util.PASSWORD,
+    port              : util.CONNECTION_PORT,
     debug             : false,
     multipleStatements: true,
-    database          : STUDENTS_DATABASE
+    database          : util.STUDENTS_DATABASE
   });
   return new Promise((resolve, reject) => {
     conM.connect(err => {
       if (err) { 
         reject(err);
       }
-      conM.query("SELECT * FROM " + STUDENTS_TABLE + " WHERE  current_classLevel =" + fromGradeLevel, (err, results, fields) => {
+      conM.query("SELECT * FROM " + util.STUDENTS_TABLE + " WHERE  current_classLevel =" + fromGradeLevel, (err, results, fields) => {
         if (err) {
           reject(err);
         } else {
@@ -285,7 +285,7 @@ module.exports.graduateStudentsStream = (fromGradeLevel, toGradeLevel) => {
       k.push(toGradeLevel);
       let newclass_level  = '[' + k + ']';
       let newSchoolyears  = '[' + h +']';
-          qry            += "UPDATE " + STUDENTS_TABLE + "SET current_classLevel = '" + toGradeLevel + "' , class_level = '" +
+          qry            += "UPDATE " + util.STUDENTS_TABLE + "SET current_classLevel = '" + toGradeLevel + "' , class_level = '" +
         newclass_level + "' , school_years = '" + newSchoolyears + "' WHERE reg_no = '" + element.reg_no + "' ;";
       
     }); 

@@ -7,16 +7,16 @@ const mysql     = require('mysql');
 const SqlString = require('sqlstring');
 const { List }  = require('immutable');
 const con       = mysql.createConnection({
-      host    : HOST,
-      user    : USER,
-      password: PASSWORD,
-      port    : CONNECTION_PORT,
+      host    : util.HOST,
+      user    : util.USER,
+      password: util.PASSWORD,
+      port    : util.CONNECTION_PORT,
       debug   : false,
-      database: STUDENTS_DATABASE
+      database: util.STUDENTS_DATABASE
 });
 
 /*-------------------------------------------------------------------------------------------------------*/
-const createTable = "CREATE TABLE " + FEES_TABLE + " IF NOT EXISTS (" +
+const createTable = "CREATE TABLE " +  util.FEES_TABLE + " IF NOT EXISTS (" +
     "`id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT , " +
     "`fee_name` VARCHAR(250) NOT NULL ," +
     "`amount` VARCHAR(20) NOT NULL ," +
@@ -51,7 +51,7 @@ module.exports.createFee = feesObject => {
                 reject(err);
             } else { 
                 
-                con.query("SELECT fee_name FROM " + FEES_TABLE + " WHERE fee_name = '" + feesObject.fee_name + "'", (err, results, fields) => {
+                con.query("SELECT fee_name FROM " +  util.FEES_TABLE + " WHERE fee_name = '" + feesObject.fee_name + "'", (err, results, fields) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -59,7 +59,7 @@ module.exports.createFee = feesObject => {
                         // check for duplication
                         if (results.size() > 0) {
                             // now save if no duplication
-                            con.query("INSERT INTO " + FEES_TABLE + " SET ?", feesObject, (err, results, fields) => {
+                            con.query("INSERT INTO " +  util.FEES_TABLE + " SET ?", feesObject, (err, results, fields) => {
                                 if (err) {
                                     reject(err);
                                 } else {
@@ -89,7 +89,7 @@ module.exports.updateFee = (id , feeObject) => {
            } else {
                let newFee = [
                     id];
-               con.query("UPDATE " + FEES_TABLE + " SET fee_name=? ,amount =? ,whose_paying=?,fee_type=? ,bank=? " +
+               con.query("UPDATE " + util.FEES_TABLE + " SET fee_name=? ,amount =? ,whose_paying=?,fee_type=? ,bank=? " +
                    ",bank_acc=?,description=? ,date_=? ,payment_method=? ,history=? WHERE id=?", newFee, (err, results, fields) => { 
                        if (err) {
                            reject(err);
@@ -114,7 +114,7 @@ module.exports.deleteFee = id => {
             if (err) {
                 reject(err);
             } else { 
-                con.query("DELETE FROM " + FEES_TABLE + " WHERE id = '" + id + "'", (err, results, fields) => { 
+                con.query("DELETE FROM " + util.FEES_TABLE + " WHERE id = '" + id + "'", (err, results, fields) => {
                     if (err) {
                         reject(err);
                     } else { 
@@ -138,7 +138,7 @@ module.exports.getFeesAmountForGradeLevel = gradeLevel => {
             if (err) {
                 reject(err);
             } else {
-                con.query("SELECT amount , whose_paying FROM  " + FEES_TABLE + "WHERE whose_paying ='" + gradeLevel + "'", (err, results, fields) => {
+                con.query("SELECT amount , whose_paying FROM  " +  util.FEES_TABLE + "WHERE whose_paying ='" + gradeLevel + "'", (err, results, fields) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -192,7 +192,7 @@ module.exports.getFeeTypes = () => {
             if (err) {
                 reject(err);
             } else { 
-                con.query("SELECT fee_name FROM " + FEES_TABLE, (err, results, fields) => { 
+                con.query("SELECT fee_name FROM " + util.FEES_TABLE, (err, results, fields) => {
                     if (err) { 
                         reject(err);
                     } else {
