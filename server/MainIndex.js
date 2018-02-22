@@ -9,6 +9,7 @@ const os                                     = require("os");
 let   win                = null;
 let   workerWindow       = null;
 let   printInvoiceWindow = null;
+let   logInWin           = null;
 const windowWidth        = 1500;
 const windowHeight       = 800;
 
@@ -17,14 +18,33 @@ require('electron-reload')(__dirname, {
 })
 //
 
-
+function onCreateLogIn() { 
+  logInWin = new BrowserWindow({
+    	width          : windowWidth,
+    	height         : windowHeight,
+    	title          : 'Log In',
+    	backgroundColor: '#73caef',
+    	titleBarStyle  : 'hidden',
+    	icon           : path.join(__dirname, '../public/images/assets/128/logo.png')
+  });
+  logInWin.setMenu(null);
+  logInWin.loadURL(
+    	url.format({
+    	  pathname     : path.join(__dirname, '../views', 'login.html'),
+    	  protocol     : 'file:',
+    	  slashes      : true,
+    	  titleBarStyle: 'hidden',
+    	  frame        : false
+    	})
+  );
+ }
 function onCreateWindow () {
 	
 		win = new BrowserWindow({
 			width          : windowWidth,
 			height         : windowHeight,
 			title          : 'Private School Management',
-			backgroundColor: '#312450',
+			backgroundColor: '#73caef',
 			titleBarStyle  : 'hidden',
 			icon           : path.join(__dirname, '../public/images/assets/128/logo.png')
 		});
@@ -168,9 +188,11 @@ function onExitWindow () {
 	win = null ;
 }
 /****************************************************************************************************/
-
+ipcMain.on('closeLogIn', (ev, args) => {
+  logInWin.hide();
+});
 /****************************************************************************************************/
-
+  
 /****************************************************************************************************/
 
 /****************************************************************************************************/
@@ -180,11 +202,12 @@ function onExitWindow () {
 /****************************************************************************************************/
 
 // create window
-app.on('ready' , onCreateWindow );
+app.on('ready',  onCreateWindow /* onCreateLogIn */);
 // kills process the necessary windows are closed
 
 app.on('closed' ,  (ev)=> {
   printInvoiceWindow = null;
+  logInWin           = null;
   onExitWindow();
 });
 
